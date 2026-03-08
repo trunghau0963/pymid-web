@@ -381,6 +381,7 @@ export default async function TraceabilityPage({ params }: Props) {
             </Card>
           )}
         </div>
+        </div>
       </div>
     </div>
   );

@@ -219,6 +219,7 @@ export default async function NhaYenPage({ params }: Props) {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
 
       {/* Tabs Navigation */}

@@ -150,16 +150,15 @@ export default async function UserProfilePage({
       <div className="border-b border-slate-200 bg-gradient-to-b from-slate-50 to-background">
         <div className="max-w-6xl mx-auto px-6 py-10">
           <ProfileHeader
-            avatar={user.avatar ? getImageUrl(user.avatar.formats?.medium?.url || user.avatar.url) : null}
+            image={user.avatar ? getImageUrl(user.avatar.formats?.medium?.url || user.avatar.url) : undefined}
             name={fullname}
-            role={user.who_am_i}
+            title={user.who_am_i}
             location={user.province}
             description={user.bio?.description}
-            isVip={user.show_vip}
-            stats={[
-              { n: totals.nhaYen, label: "Nhà yến" },
-              { n: totals.nhaSanXuat, label: "Nhà SX" },
-              { n: totals.party, label: "Nhà PP" },
+            contactInfo={[
+              ...(user.bio?.phoneNumber ? [{ label: "Điện thoại", value: user.bio.phoneNumber, icon: <Phone className="h-4 w-4" />, href: `tel:${user.bio.phoneNumber}` }] : []),
+              ...(user.bio?.email ? [{ label: "Email", value: user.bio.email, icon: <Mail className="h-4 w-4" />, href: `mailto:${user.bio.email}` }] : []),
+              ...(user.province ? [{ label: "Địa chỉ", value: user.province, icon: <MapPin className="h-4 w-4" /> }] : []),
             ]}
           />
         </div>
@@ -236,7 +235,7 @@ export default async function UserProfilePage({
             </TabsContent>
           )}
 
-          {/* ───── Nhà sản xuất Tab ───── */}
+          {/* ───── Nhà s��n xuất Tab ───── */}
           {hasNhaSanXuat && (
             <TabsContent value="nha-san-xuat" className="py-8 space-y-5">
               {nhaSanXuats.map((item) => (
