@@ -8,9 +8,9 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: "/", label: "Trang chủ" },
-    { href: "/", label: "Truy xuất nguồn gốc" },
-    { href: "/", label: "Nhà yến" },
+    { id: "home", href: "/", label: "Trang chủ" },
+    { id: "traceability", href: "/", label: "Truy xuất nguồn gốc" },
+    { id: "nest-house", href: "/", label: "Nhà yến" },
   ];
 
   return (
@@ -25,7 +25,7 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           {navLinks.map((link) => (
             <Link
-              key={link.href}
+              key={link.id}
               href={link.href}
               className="text-slate-600 hover:text-primary transition-colors duration-200"
             >
@@ -54,7 +54,7 @@ export function Header() {
           <div className="container mx-auto px-4 py-4 flex flex-col gap-3">
             {navLinks.map((link) => (
               <Link
-                key={link.href}
+                key={link.id}
                 href={link.href}
                 className="text-slate-600 hover:text-primary transition-colors duration-200 py-2"
                 onClick={() => setMobileMenuOpen(false)}
