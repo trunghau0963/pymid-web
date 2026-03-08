@@ -19,6 +19,8 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { ShopGrid } from "@/components/shop-grid";
 import {
   Building2,
   MapPin,

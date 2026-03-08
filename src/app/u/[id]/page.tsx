@@ -12,6 +12,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Breadcrumb } from "@/components/breadcrumb";
+import { ProfileHeader } from "@/components/profile-header";
 import {
   User,
   MapPin,
@@ -136,100 +138,37 @@ export default async function UserProfilePage({
   const hasParties = parties.length > 0;
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Compact Breadcrumb */}
-      <div className="border-b">
+    <div className="min-h-screen bg-background">
+      {/* Breadcrumb */}
+      <div className="border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-6 py-3">
-          <nav className="text-sm text-gray-500">
-            <Link href="/" className="hover:text-gray-900 transition-colors">
-              Trang chủ
-            </Link>
-            <span className="mx-2 text-gray-300">/</span>
-            <span className="text-gray-900 font-medium">{fullname}</span>
-          </nav>
+          <Breadcrumb items={[{ label: "Trang chủ", href: "/" }, { label: fullname }]} />
         </div>
       </div>
 
-      {/* Profile Header — minimal, airy */}
-      <div className="border-b bg-gradient-to-b from-gray-50 to-white">
+      {/* Profile Header */}
+      <div className="border-b border-slate-200 bg-gradient-to-b from-slate-50 to-background">
         <div className="max-w-6xl mx-auto px-6 py-10">
-          <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
-            {/* Avatar */}
-            <div className="shrink-0">
-              {user.avatar ? (
-                <img
-                  src={getImageUrl(
-                    user.avatar.formats?.medium?.url ||
-                      user.avatar.url
-                  )}
-                  alt={fullname}
-                  className="w-28 h-28 rounded-full object-cover ring-4 ring-white shadow-md"
-                />
-              ) : (
-                <div className="w-28 h-28 rounded-full bg-gray-100 flex items-center justify-center ring-4 ring-white shadow-md">
-                  <User className="h-12 w-12 text-gray-400" />
-                </div>
-              )}
-            </div>
-
-            {/* Name + meta */}
-            <div className="flex-1 text-center sm:text-left">
-              <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-                {fullname}
-              </h1>
-
-              <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-2">
-                {user.who_am_i && (
-                  <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-red-50 text-red-700">
-                    {user.who_am_i}
-                  </span>
-                )}
-                {user.province && (
-                  <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">
-                    <MapPin className="h-3 w-3" />
-                    {user.province}
-                  </span>
-                )}
-                {user.show_vip && (
-                  <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">
-                    <Award className="h-3 w-3" />
-                    VIP
-                  </span>
-                )}
-              </div>
-
-              {user.bio?.description && (
-                <p className="mt-3 text-sm text-gray-500 max-w-xl leading-relaxed">
-                  {user.bio.description}
-                </p>
-              )}
-            </div>
-
-            {/* Stats — clean number blocks */}
-            <div className="flex gap-6 sm:gap-8">
-              {[
-                { n: totals.nhaYen, label: "Nhà yến" },
-                { n: totals.nhaSanXuat, label: "Nhà SX" },
-                { n: totals.party, label: "Nhà PP" },
-              ].map((s) => (
-                <div key={s.label} className="text-center">
-                  <p className="text-2xl font-bold text-gray-900">
-                    {s.n}
-                  </p>
-                  <p className="text-xs text-gray-400 mt-0.5 uppercase tracking-wide">
-                    {s.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ProfileHeader
+            avatar={user.avatar ? getImageUrl(user.avatar.formats?.medium?.url || user.avatar.url) : null}
+            name={fullname}
+            role={user.who_am_i}
+            location={user.province}
+            description={user.bio?.description}
+            isVip={user.show_vip}
+            stats={[
+              { n: totals.nhaYen, label: "Nhà yến" },
+              { n: totals.nhaSanXuat, label: "Nhà SX" },
+              { n: totals.party, label: "Nhà PP" },
+            ]}
+          />
         </div>
       </div>
 
       {/* Tabs */}
       <div className="max-w-6xl mx-auto px-6">
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="w-full h-auto p-0 bg-transparent rounded-none border-b justify-start gap-0 overflow-x-auto">
+          <TabsList className="w-full h-auto p-0 bg-transparent rounded-none border-b border-slate-200 justify-start gap-0 overflow-x-auto">
             <Tab value="profile" icon={<User className="h-4 w-4" />} label="Đại diện" />
             {hasNhaYen && (
               <Tab value="nha-yen" icon={<Home className="h-4 w-4" />} label="Nhà yến" count={totals.nhaYen} />
@@ -247,10 +186,10 @@ export default async function UserProfilePage({
             <div className="grid md:grid-cols-2 gap-8">
               {/* Contact */}
               <section>
-                <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">
+                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">
                   Thông tin liên hệ
                 </h3>
-                <dl className="divide-y divide-gray-100">
+                <dl className="divide-y divide-slate-100">
                   <DL label="Họ và tên" value={fullname} />
                   {user.bio?.address && (
                     <DL label="Địa chỉ" value={user.bio.address} />
@@ -266,10 +205,10 @@ export default async function UserProfilePage({
 
               {/* Membership */}
               <section>
-                <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">
+                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">
                   Thành viên PYMID
                 </h3>
-                <dl className="divide-y divide-gray-100">
+                <dl className="divide-y divide-slate-100">
                   {user.who_am_i && (
                     <DL label="Vai trò" value={user.who_am_i} />
                   )}
@@ -338,12 +277,12 @@ function Tab({
   return (
     <TabsTrigger
       value={value}
-      className="px-5 py-3.5 gap-2 rounded-none border-b-2 border-transparent data-[state=active]:border-red-600 data-[state=active]:text-red-600 data-[state=active]:shadow-none bg-transparent text-gray-500 hover:text-gray-900 transition-colors"
+      className="px-5 py-3.5 gap-2 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:shadow-none bg-transparent text-slate-600 hover:text-foreground transition-colors"
     >
       {icon}
       <span className="hidden sm:inline text-sm">{label}</span>
       {count !== undefined && (
-        <span className="text-[11px] font-medium bg-gray-100 text-gray-500 rounded-full px-1.5 py-0.5 min-w-[20px] text-center data-[state=active]:bg-red-50 data-[state=active]:text-red-600">
+        <span className="text-[11px] font-medium bg-slate-100 text-slate-600 rounded-full px-1.5 py-0.5 min-w-[20px] text-center data-[state=active]:bg-primary/10 data-[state=active]:text-primary">
           {count}
         </span>
       )}
@@ -362,12 +301,12 @@ function DL({
 }) {
   return (
     <div className="flex py-3 text-sm">
-      <dt className="w-36 shrink-0 text-gray-400">{label}</dt>
+      <dt className="w-36 shrink-0 text-slate-500">{label}</dt>
       <dd
         className={
           highlight
             ? "font-semibold text-amber-600"
-            : "text-gray-900"
+            : "text-slate-900"
         }
       >
         {value}
@@ -379,8 +318,8 @@ function DL({
 function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
   if (!images.length) {
     return (
-      <div className="aspect-[4/3] bg-gray-100 rounded-sm flex items-center justify-center">
-        <span className="text-gray-300 text-sm">Không có ảnh</span>
+      <div className="aspect-[4/3] bg-slate-100 rounded-sm flex items-center justify-center">
+        <span className="text-slate-300 text-sm">Không có ảnh</span>
       </div>
     );
   }
@@ -390,7 +329,7 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
 
   return (
     <div className="space-y-2">
-      <div className="aspect-[4/3] rounded-sm overflow-hidden bg-gray-100">
+      <div className="aspect-[4/3] rounded-sm overflow-hidden bg-slate-100">
         <img
           src={getImageUrl(
             main.formats?.medium?.url || main.url
@@ -404,7 +343,7 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
           {thumbs.map((img, i) => (
             <div
               key={i}
-              className="w-14 h-14 rounded-sm overflow-hidden bg-gray-100"
+              className="w-14 h-14 rounded-sm overflow-hidden bg-slate-100"
             >
               <img
                 src={getImageUrl(
@@ -429,11 +368,11 @@ function Row({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex text-sm border-b border-gray-50 last:border-0">
-      <div className="w-[38%] shrink-0 py-2.5 pr-4 text-gray-400">
+    <div className="flex text-sm border-b border-slate-50 last:border-0">
+      <div className="w-[38%] shrink-0 py-2.5 pr-4 text-slate-500">
         {label}
       </div>
-      <div className="py-2.5 text-gray-800">{children}</div>
+      <div className="py-2.5 text-slate-800">{children}</div>
     </div>
   );
 }
@@ -448,7 +387,7 @@ function DetailLink({
   return (
     <Link
       href={href}
-      className="inline-flex items-center gap-1 text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
+      className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
     >
       {label || "Chi tiết"}
       <ArrowRight className="h-3.5 w-3.5" />
@@ -462,7 +401,7 @@ function ExtLink({ href, text }: { href: string; text?: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-red-600 hover:text-red-700 hover:underline inline-flex items-center gap-1 transition-colors"
+      className="text-primary hover:text-primary/80 hover:underline inline-flex items-center gap-1 transition-colors"
     >
       {text || href}
       <ExternalLink className="h-3 w-3" />
@@ -478,7 +417,7 @@ function NhaYenCard({ item }: { item: NhaYenItem }) {
   const images = [...(item.image || []), ...(item.avatar || [])];
 
   return (
-    <div className="bg-white border border-gray-100 rounded-sm overflow-hidden hover:shadow-sm transition-shadow">
+    <div className="bg-background border border-slate-200 rounded-sm overflow-hidden hover:shadow-sm transition-shadow">
       <div className="flex flex-col md:flex-row">
         <div className="md:w-[300px] shrink-0 p-5">
           <Gallery images={images} alt={item.name} />
@@ -489,8 +428,8 @@ function NhaYenCard({ item }: { item: NhaYenItem }) {
           <div className="flex items-start justify-between mb-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <Home className="h-5 w-5 text-red-600" />
-                <h3 className="font-semibold text-gray-900">
+                <Home className="h-5 w-5 text-primary" />
+                <h3 className="font-semibold text-slate-900">
                   {item.name}
                 </h3>
               </div>
@@ -521,14 +460,14 @@ function NhaYenCard({ item }: { item: NhaYenItem }) {
             <Row label="Tên nhà yến">
               <Link
                 href={`/ny/${item.id}`}
-                className="text-red-600 font-medium hover:underline"
+                className="text-primary font-medium hover:underline"
               >
                 {item.name}
               </Link>
             </Row>
             {item.location?.address && (
               <Row label="Địa chỉ">
-                <span className="text-red-600">
+                <span className="text-primary">
                   {item.location.address}
                 </span>
                 {item.location.lat && item.location.long && (
@@ -548,7 +487,7 @@ function NhaYenCard({ item }: { item: NhaYenItem }) {
             )}
             {item.short_description && (
               <Row label="Mô tả">
-                <span className="line-clamp-3 leading-relaxed">
+                <span className="line-clamp-3 leading-relaxed text-slate-700">
                   {item.short_description}
                 </span>
               </Row>
@@ -573,7 +512,7 @@ function NhaSanXuatCard({ item }: { item: NhaSanXuatItem }) {
   const images = [...(item.image || []), ...(item.avatar || [])];
 
   return (
-    <div className="bg-white border border-gray-100 rounded-sm overflow-hidden hover:shadow-sm transition-shadow">
+    <div className="bg-background border border-slate-200 rounded-sm overflow-hidden hover:shadow-sm transition-shadow">
       <div className="flex flex-col md:flex-row">
         <div className="md:w-[300px] shrink-0 p-5">
           <Gallery images={images} alt={item.name} />
@@ -583,8 +522,8 @@ function NhaSanXuatCard({ item }: { item: NhaSanXuatItem }) {
           <div className="flex items-start justify-between mb-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <Factory className="h-5 w-5 text-red-600" />
-                <h3 className="font-semibold text-gray-900">
+                <Factory className="h-5 w-5 text-primary" />
+                <h3 className="font-semibold text-slate-900">
                   {item.name}
                 </h3>
               </div>
@@ -615,7 +554,7 @@ function NhaSanXuatCard({ item }: { item: NhaSanXuatItem }) {
             <Row label="Đơn vị sản xuất">
               <Link
                 href={`/nsx/${item.id}`}
-                className="text-red-600 font-medium hover:underline"
+                className="text-primary font-medium hover:underline"
               >
                 {item.code || item.name}
               </Link>
@@ -640,7 +579,7 @@ function NhaSanXuatCard({ item }: { item: NhaSanXuatItem }) {
               <Row label="Email">
                 <a
                   href={`mailto:${item.email}`}
-                  className="text-red-600 hover:underline"
+                  className="text-primary hover:underline"
                 >
                   {item.email}
                 </a>
@@ -674,7 +613,7 @@ function PartyCard({ item }: { item: PartyItem }) {
   const images = item.image || [];
 
   return (
-    <div className="bg-white border border-gray-100 rounded-sm overflow-hidden hover:shadow-sm transition-shadow">
+    <div className="bg-background border border-slate-200 rounded-sm overflow-hidden hover:shadow-sm transition-shadow">
       <div className="flex flex-col md:flex-row">
         <div className="md:w-[300px] shrink-0 p-5">
           <Gallery images={images} alt={item.name} />
@@ -683,8 +622,8 @@ function PartyCard({ item }: { item: PartyItem }) {
         <div className="flex-1 p-5 md:pl-0">
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Store className="h-5 w-5 text-red-600" />
-              <h3 className="font-semibold text-gray-900">
+              <Store className="h-5 w-5 text-primary" />
+              <h3 className="font-semibold text-slate-900">
                 {item.name}
               </h3>
             </div>
@@ -697,25 +636,25 @@ function PartyCard({ item }: { item: PartyItem }) {
             <Row label="Tên nhà phân phối">
               <Link
                 href={`/p/${item.id}`}
-                className="text-red-600 font-medium hover:underline"
+                className="text-primary font-medium hover:underline"
               >
                 {item.name}
               </Link>
             </Row>
             {item.short_description && (
               <Row label="Mô tả">
-                <span className="line-clamp-3 leading-relaxed">
+                <span className="line-clamp-3 leading-relaxed text-slate-700">
                   {item.short_description}
                 </span>
               </Row>
             )}
             {item.location?.address && (
               <Row label="Địa chỉ">
-                <span className="text-red-600">
+                <span className="text-primary">
                   {item.location.address}
                 </span>
                 {item.location.lat && item.location.long && (
-                  <span className="text-gray-400 text-xs ml-1">
+                  <span className="text-slate-400 text-xs ml-1">
                     - {item.location.lat.toFixed(7)},
                     {item.location.long.toFixed(7)}
                   </span>
