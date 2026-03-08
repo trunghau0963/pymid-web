@@ -114,8 +114,7 @@ export default async function TraceabilityPage({ params }: Props) {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 max-w-5xl">
-
-      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8">
         {/* Main Content Column */}
         <div className="lg:col-span-2 space-y-8">
           {/* Key Metrics Grid */}
