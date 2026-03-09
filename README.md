@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏠 Pymid Web — Hệ thống Truy xuất nguồn gốc Tổ Yến
 
-## Getting Started
+> Nền tảng web minh bạch hóa chuỗi cung ứng ngành tổ yến Việt Nam — từ **Nhà yến** → **Nhà sản xuất** → **Nhà phân phối** → **Cửa hàng** → **Người tiêu dùng**.
 
-First, run the development server:
+## ✨ Tính năng
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 🔍 **Truy xuất nguồn gốc** — Nhập mã nhóm tổ yến để xem toàn bộ hành trình sản phẩm
+- 🏡 **Nhà yến** — Xem thông tin chi tiết, nhật ký thu hoạch, môi trường, chủ sở hữu
+- 🏭 **Nhà sản xuất** — Sản phẩm, giấy phép, quy trình sản xuất
+- 🏢 **Nhà phân phối** — Hệ thống cửa hàng, đội ngũ nhân viên
+- 🛒 **Cửa hàng** — Vị trí, sản phẩm đang bán, liên hệ
+- 👤 **Hồ sơ người dùng** — Quản lý nhà yến, nhà sản xuất, nhà phân phối
+
+## 🛠️ Công nghệ
+
+| Lớp | Công nghệ |
+|---|---|
+| Framework | **Next.js 16** (App Router, Turbopack) |
+| UI | **Tailwind CSS v4** + **shadcn/ui** |
+| Language | **TypeScript** |
+| Icons | **Lucide React** |
+| Font | **Inter** (Google Fonts, Vietnamese subset) |
+| API | REST API — `api.pymid.com` |
+
+## 📸 Screenshots
+
+### Trang chủ
+
+| Desktop | Mobile |
+|---|---|
+| ![Trang chủ - Desktop](capture/home-desktop.png) | ![Trang chủ - Mobile](capture/home-mobile.png) |
+
+### Chi tiết Nhà yến (`/ny/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![Nhà yến - Desktop](capture/nha-yen-detail-desktop.png) | ![Nhà yến - Mobile](capture/nha-yen-detail-mobile.png) |
+
+### Chi tiết Nhà sản xuất (`/nsx/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![Nhà sản xuất - Desktop](capture/nha-san-xuat-detail-desktop.png) | ![Nhà sản xuất - Mobile](capture/nha-san-xuat-detail-mobile.png) |
+
+### Chi tiết Nhà phân phối (`/p/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![Nhà phân phối - Desktop](capture/nha-phan-phoi-detail-desktop.png) | ![Nhà phân phối - Mobile](capture/nha-phan-phoi-detail-mobile.png) |
+
+### Chi tiết Cửa hàng (`/s/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![Cửa hàng - Desktop](capture/cua-hang-detail-desktop.png) | ![Cửa hàng - Mobile](capture/cua-hang-detail-mobile.png) |
+
+### Truy xuất nguồn gốc — Nhóm tổ yến (`/n/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![Nhóm tổ yến - Desktop](capture/nhom-to-yen-detail-desktop.png) | ![Nhóm tổ yến - Mobile](capture/nhom-to-yen-detail-mobile.png) |
+
+## 📁 Cấu trúc dự án
+
+```
+src/
+├── app/
+│   ├── page.tsx              # Trang chủ
+│   ├── layout.tsx            # Root layout
+│   ├── globals.css           # Theme & global styles
+│   ├── n/[id]/page.tsx       # Chi tiết Nhóm tổ yến (truy xuất)
+│   ├── ny/[id]/page.tsx      # Chi tiết Nhà yến
+│   ├── nsx/[id]/page.tsx     # Chi tiết Nhà sản xuất
+│   ├── p/[id]/page.tsx       # Chi tiết Nhà phân phối
+│   ├── s/[id]/page.tsx       # Chi tiết Cửa hàng
+│   └── u/[id]/page.tsx       # Hồ sơ người dùng
+├── components/               # Shared components
+│   ├── header.tsx
+│   ├── footer.tsx
+│   ├── search-form.tsx
+│   ├── profile-header.tsx
+│   ├── content-slider.tsx
+│   └── ui/                   # shadcn/ui primitives
+└── lib/
+    ├── api.ts                # API client & types
+    └── utils.ts              # Utilities
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Bắt đầu
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Cài đặt dependencies
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Chạy dev server
+npm run dev
 
-## Learn More
+# Build production
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Mở [http://localhost:3000](http://localhost:3000) để xem kết quả.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT

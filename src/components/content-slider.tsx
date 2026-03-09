@@ -55,7 +55,7 @@ export function ContentSlider({
 
   if (totalSlides === 0) {
     return (
-      <div className="py-12 text-center text-slate-500">
+      <div className="py-12 text-center text-muted-foreground">
         Không có dữ liệu
       </div>
     );
@@ -92,7 +92,7 @@ export function ContentSlider({
               className={`w-2.5 h-2.5 rounded-full transition-all ${
                 index === currentIndex
                   ? 'bg-primary w-6'
-                  : 'bg-slate-300 hover:bg-slate-400'
+                  : 'bg-border hover:bg-muted-foreground'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -100,8 +100,8 @@ export function ContentSlider({
         </div>
 
         {/* Center: Counter */}
-        <div className="text-sm text-slate-500">
-          <span className="font-medium text-slate-700">{currentIndex + 1}</span>
+        <div className="text-sm text-muted-foreground">
+          <span className="font-medium text-foreground/80">{currentIndex + 1}</span>
           <span className="mx-1">/</span>
           <span>{totalSlides}</span>
         </div>
@@ -111,10 +111,10 @@ export function ContentSlider({
           {/* Play/Pause */}
           <button
             onClick={() => setIsPlaying((p) => !p)}
-            className={`p-2 rounded-full border transition-colors ${
+            className={`p-2 rounded-full border transition-all duration-200 ${
               isPlaying
-                ? 'bg-primary text-white border-primary hover:bg-primary/90'
-                : 'bg-white text-slate-600 border-slate-300 hover:border-slate-400 hover:bg-slate-50'
+                ? 'bg-primary text-white border-primary hover:bg-primary/90 shadow-sm shadow-primary/20'
+                : 'bg-card text-muted-foreground border-border/60 hover:border-border hover:bg-muted/40'
             }`}
             aria-label={isPlaying ? 'Pause auto-play' : 'Start auto-play'}
             title={isPlaying ? 'Dừng tự động (Space)' : 'Tự động chuyển (Space)'}
@@ -129,7 +129,7 @@ export function ContentSlider({
           {/* Prev */}
           <button
             onClick={goToPrev}
-            className="p-2 rounded-full border border-slate-300 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50 transition-colors"
+            className="p-2 rounded-full border border-border/60 bg-card text-muted-foreground hover:border-border hover:bg-muted/40 transition-all duration-200"
             aria-label="Previous slide"
             title="Trước (←)"
           >
@@ -139,7 +139,7 @@ export function ContentSlider({
           {/* Next */}
           <button
             onClick={goToNext}
-            className="p-2 rounded-full border border-slate-300 bg-white text-slate-600 hover:border-slate-400 hover:bg-slate-50 transition-colors"
+            className="p-2 rounded-full border border-border/60 bg-card text-muted-foreground hover:border-border hover:bg-muted/40 transition-all duration-200"
             aria-label="Next slide"
             title="Tiếp (→)"
           >
@@ -150,7 +150,7 @@ export function ContentSlider({
 
       {/* Progress bar (auto-play indicator) */}
       {isPlaying && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-slate-100 overflow-hidden rounded-t-sm">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-muted/40 overflow-hidden rounded-t-xl">
           <div
             className="h-full bg-primary animate-progress-bar"
             style={{

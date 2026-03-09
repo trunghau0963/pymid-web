@@ -141,7 +141,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
 
       {/* Banner */}
       {data.banner && (
-        <div className="rounded-xs overflow-hidden mb-6">
+        <div className="rounded-2xl overflow-hidden mb-6">
           <img
             src={getImageUrl(data.banner.url)}
             alt={data.name}
@@ -153,7 +153,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         {/* YouTube / Image */}
-        <div className="rounded-xs overflow-hidden bg-muted">
+        <div className="rounded-2xl overflow-hidden bg-muted">
           {youtubeEmbed ? (
             <div className="aspect-video">
               <iframe
@@ -178,7 +178,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
         </div>
 
         {/* Info Card */}
-        <Card className="rounded-xs">
+        <Card className="rounded-2xl">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2 mb-1">
               <Factory className="h-5 w-5 text-primary" />
@@ -227,7 +227,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
 
       {/* Owner Info */}
       {data.owner && (
-        <Card className="mb-8 rounded-xs">
+        <Card className="mb-8 rounded-2xl">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
               <User className="h-5 w-5" />
@@ -237,7 +237,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
           <CardContent>
             <Link
               href={`/u/${data.owner.id}`}
-              className="flex items-center gap-4 hover:bg-muted p-3 rounded-xs transition-colors"
+              className="flex items-center gap-4 hover:bg-muted/60 p-3 rounded-xl transition-colors"
             >
               <Avatar className="h-12 w-12">
                 {data.owner.avatar ? (
@@ -269,12 +269,12 @@ export default async function NhaSanXuatPage({ params }: Props) {
 
       {/* Tabs */}
       <Tabs defaultValue="info" className="space-y-6">
-        <TabsList className="flex flex-wrap h-auto gap-1 bg-muted/50 p-1 rounded-xs">
+        <TabsList className="flex flex-wrap h-auto gap-1.5 bg-muted/40 p-1.5 rounded-2xl border border-border/40">
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
               value={tab.id}
-              className="rounded-xs data-[state=active]:bg-background"
+              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200"
             >
               {tab.label}
             </TabsTrigger>
@@ -283,7 +283,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
 
         {/* Info Tab */}
         <TabsContent value="info">
-          <Card className="rounded-xs">
+          <Card className="rounded-xl">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
@@ -306,7 +306,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
         {/* Products Tab */}
         {activeProducts.length > 0 && (
           <TabsContent value="products">
-            <Card className="rounded-xs">
+            <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Package className="h-5 w-5" />
@@ -316,7 +316,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
               <CardContent>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {activeProducts.map((product) => (
-                    <Card key={product.id} className="rounded-xs overflow-hidden">
+                    <Card key={product.id} className="rounded-xl overflow-hidden">
                       {product.image?.[0] ? (
                         <img
                           src={getImageUrl(product.image[0].url)}
@@ -344,7 +344,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
                           </p>
                         )}
                         {product.timelife && (
-                          <Badge variant="secondary" className="mt-2 rounded-xs">
+                          <Badge variant="secondary" className="mt-2 rounded-xl">
                             HSD: {product.timelife} ngày
                           </Badge>
                         )}
@@ -360,7 +360,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
         {/* Nhà yến Tab */}
         {nhaYens.length > 0 && (
           <TabsContent value="nha-yen">
-            <Card className="rounded-xs">
+            <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Home className="h-5 w-5" />
@@ -375,7 +375,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
                       href={`/ny/${nhaYen.id}`}
                       className="block"
                     >
-                      <Card className="rounded-xs overflow-hidden hover:shadow-md transition-shadow">
+                      <Card className="rounded-xl overflow-hidden hover:shadow-md transition-shadow">
                         {nhaYen.image?.[0] ? (
                           <img
                             src={getImageUrl(nhaYen.image[0].url)}
@@ -396,12 +396,12 @@ export default async function NhaSanXuatPage({ params }: Props) {
                           )}
                           <div className="flex gap-2 mt-2 flex-wrap">
                             {nhaYen.so_o_da && (
-                              <Badge variant="outline" className="rounded-xs">
+                              <Badge variant="outline" className="rounded-xl">
                                 {nhaYen.so_o_da} tổ
                               </Badge>
                             )}
                             {nhaYen.floor && (
-                              <Badge variant="outline" className="rounded-xs">
+                              <Badge variant="outline" className="rounded-xl">
                                 {nhaYen.floor} tầng
                               </Badge>
                             )}
@@ -419,7 +419,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
         {/* Team Tab */}
         {kyThuats.length > 0 && (
           <TabsContent value="team">
-            <Card className="rounded-xs">
+            <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="h-5 w-5" />
@@ -430,7 +430,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {kyThuats.map((user) => (
                     <Link key={user.id} href={`/u/${user.id}`}>
-                      <Card className="rounded-xs hover:shadow-md transition-shadow">
+                      <Card className="rounded-xl hover:shadow-md transition-shadow">
                         <CardContent className="p-4 flex items-center gap-4">
                           <Avatar className="h-12 w-12">
                             {user.avatar ? (
@@ -468,7 +468,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
         {/* Flow Tab */}
         {data.flow_description && (
           <TabsContent value="flow">
-            <Card className="rounded-xs">
+            <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Play className="h-5 w-5" />
@@ -488,7 +488,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
         {/* License Tab */}
         {data.license_description && (
           <TabsContent value="license">
-            <Card className="rounded-xs">
+            <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ShieldCheck className="h-5 w-5" />
@@ -508,7 +508,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
         {/* Camera Tab */}
         {data.cam_description && (
           <TabsContent value="camera">
-            <Card className="rounded-xs">
+            <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Camera className="h-5 w-5" />
@@ -528,14 +528,14 @@ export default async function NhaSanXuatPage({ params }: Props) {
 
       {/* Gallery */}
       {data.image && data.image.length > 1 && (
-        <Card className="mt-8 rounded-xs">
+        <Card className="mt-8 rounded-xl">
           <CardHeader>
             <CardTitle>Hình ảnh nhà sản xuất</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {data.image.map((img) => (
-                <div key={img.id} className="rounded-xs overflow-hidden">
+                <div key={img.id} className="rounded-xl overflow-hidden">
                   <img
                     src={getImageUrl(img.url)}
                     alt={img.alternativeText || data.name}

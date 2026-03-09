@@ -156,14 +156,14 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
   if (!images.length) {
     return (
       <div className="flex flex-col">
-        <div className={`${MAIN_IMAGE_HEIGHT} bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl flex items-center justify-center`}>
+        <div className={`${MAIN_IMAGE_HEIGHT} bg-gradient-to-br from-muted to-muted rounded-xl flex items-center justify-center`}>
           <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-3 bg-slate-300/50 rounded-full flex items-center justify-center">
-              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 mx-auto mb-3 bg-muted rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <span className="text-slate-400 text-sm">Chưa có hình ảnh</span>
+            <span className="text-muted-foreground text-sm">Chưa có hình ảnh</span>
           </div>
         </div>
         {/* Empty thumbnail placeholders */}
@@ -171,7 +171,7 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
           {thumbnailSlots.map((_, i) => (
             <div
               key={i}
-              className="w-14 h-14 shrink-0 rounded-lg bg-slate-100 border-2 border-dashed border-slate-200"
+              className="w-14 h-14 shrink-0 rounded-lg bg-muted/60 border-2 border-dashed border-border/60"
             />
           ))}
         </div>
@@ -185,7 +185,7 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
     <>
       <div className="flex flex-col">
         {/* Main Image - Fixed Height */}
-        <div className={`relative ${MAIN_IMAGE_HEIGHT} rounded-xl overflow-hidden bg-slate-100 group`}>
+        <div className={`relative ${MAIN_IMAGE_HEIGHT} rounded-xl overflow-hidden bg-muted/60 group`}>
           <img
             src={getImageUrl(activeImage.formats?.large?.url || activeImage.formats?.medium?.url || activeImage.url)}
             alt={alt}
@@ -197,7 +197,7 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
             className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-all duration-300"
           >
             <span className="p-3 rounded-full bg-white/90 shadow-lg opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-300">
-              <ZoomIn className="w-6 h-6 text-slate-700" />
+              <ZoomIn className="w-6 h-6 text-foreground/80" />
             </span>
           </button>
           {/* Image indicator */}
@@ -213,7 +213,7 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
               <button
                 key={i}
                 onClick={() => setActiveIndex(i)}
-                className={`w-14 h-14 shrink-0 rounded-lg overflow-hidden bg-slate-100 transition-all duration-200 ${
+                className={`w-14 h-14 shrink-0 rounded-lg overflow-hidden bg-muted/60 transition-all duration-200 ${
                   i === activeIndex
                     ? "ring-2 ring-primary ring-offset-2 scale-105 shadow-md"
                     : "opacity-60 hover:opacity-100 hover:scale-105"
@@ -228,7 +228,7 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
             ) : (
               <div
                 key={i}
-                className="w-14 h-14 shrink-0 rounded-lg bg-slate-100 border-2 border-dashed border-slate-200"
+                className="w-14 h-14 shrink-0 rounded-lg bg-muted/60 border-2 border-dashed border-border/60"
               />
             )
         ))}
@@ -255,11 +255,11 @@ function Row({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex text-sm py-2 border-b border-slate-100 last:border-0">
-      <div className="w-[40%] shrink-0 pr-3 text-slate-500">
+    <div className="flex text-sm py-2 border-b border-border/40 last:border-0">
+      <div className="w-[40%] shrink-0 pr-3 text-muted-foreground">
         {label}
       </div>
-      <div className="text-slate-800 flex-1 break-words">{children || EMPTY_VALUE}</div>
+      <div className="text-foreground flex-1 break-words">{children || EMPTY_VALUE}</div>
     </div>
   );
 }
@@ -277,7 +277,7 @@ function DetailLink({ href, label }: { href: string; label?: string }) {
 }
 
 function ExtLink({ href, text }: { href?: string | null; text?: string }) {
-  if (!href) return <span className="text-slate-400">{EMPTY_VALUE}</span>;
+  if (!href) return <span className="text-muted-foreground">{EMPTY_VALUE}</span>;
   return (
     <a
       href={href}
@@ -301,10 +301,10 @@ function NhaYenCard({ item }: { item: NhaYenItem }) {
   const images = [...(item.image || []), ...(item.avatar || [])];
 
   return (
-    <div className={`bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm ${CARD_MIN_HEIGHT}`}>
+    <div className={`bg-white border border-border/60 rounded-lg overflow-hidden shadow-sm ${CARD_MIN_HEIGHT}`}>
       <div className="flex flex-col lg:flex-row h-full">
         {/* Image Section - Larger */}
-        <div className="lg:w-[380px] shrink-0 p-4 bg-slate-50">
+        <div className="lg:w-[380px] shrink-0 p-4 bg-muted/40">
           <Gallery images={images} alt={item.name} />
         </div>
 
@@ -314,7 +314,7 @@ function NhaYenCard({ item }: { item: NhaYenItem }) {
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2">
               <Home className="h-5 w-5 text-primary" />
-              <h3 className="font-bold text-lg text-slate-900">{item.name}</h3>
+              <h3 className="font-bold text-lg text-foreground">{item.name}</h3>
             </div>
             <div className="flex items-center gap-2">
               {item.is_demo && (
@@ -350,7 +350,7 @@ function NhaYenCard({ item }: { item: NhaYenItem }) {
                 <>
                   <span className="text-primary">{item.location.address}</span>
                   {item.location.lat && item.location.long && (
-                    <span className="text-slate-400 text-xs ml-1">
+                    <span className="text-muted-foreground text-xs ml-1">
                       {item.location.lat.toFixed(4)},{item.location.long.toFixed(4)}
                     </span>
                   )}
@@ -366,7 +366,7 @@ function NhaYenCard({ item }: { item: NhaYenItem }) {
             </Row>
             <Row label="Mô tả">
               {item.short_description ? (
-                <span className="line-clamp-2 leading-relaxed text-slate-700">
+                <span className="line-clamp-2 leading-relaxed text-foreground/80">
                   {item.short_description}
                 </span>
               ) : EMPTY_VALUE}
@@ -388,10 +388,10 @@ function NhaSanXuatCard({ item }: { item: NhaSanXuatItem }) {
   const images = [...(item.image || []), ...(item.avatar || [])];
 
   return (
-    <div className={`bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm ${CARD_MIN_HEIGHT}`}>
+    <div className={`bg-white border border-border/60 rounded-lg overflow-hidden shadow-sm ${CARD_MIN_HEIGHT}`}>
       <div className="flex flex-col lg:flex-row h-full">
         {/* Image Section - Larger */}
-        <div className="lg:w-[380px] shrink-0 p-4 bg-slate-50">
+        <div className="lg:w-[380px] shrink-0 p-4 bg-muted/40">
           <Gallery images={images} alt={item.name} />
         </div>
 
@@ -401,7 +401,7 @@ function NhaSanXuatCard({ item }: { item: NhaSanXuatItem }) {
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2">
               <Factory className="h-5 w-5 text-primary" />
-              <h3 className="font-bold text-lg text-slate-900">{item.name}</h3>
+              <h3 className="font-bold text-lg text-foreground">{item.name}</h3>
             </div>
             <div className="flex items-center gap-2">
               {item.is_demo && (
@@ -470,10 +470,10 @@ function PartyCard({ item }: { item: PartyItem }) {
   const images = item.image || [];
 
   return (
-    <div className={`bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm ${CARD_MIN_HEIGHT}`}>
+    <div className={`bg-white border border-border/60 rounded-lg overflow-hidden shadow-sm ${CARD_MIN_HEIGHT}`}>
       <div className="flex flex-col lg:flex-row h-full">
         {/* Image Section - Larger */}
-        <div className="lg:w-[380px] shrink-0 p-4 bg-slate-50">
+        <div className="lg:w-[380px] shrink-0 p-4 bg-muted/40">
           <Gallery images={images} alt={item.name} />
         </div>
 
@@ -483,7 +483,7 @@ function PartyCard({ item }: { item: PartyItem }) {
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2">
               <Store className="h-5 w-5 text-primary" />
-              <h3 className="font-bold text-lg text-slate-900">{item.name}</h3>
+              <h3 className="font-bold text-lg text-foreground">{item.name}</h3>
             </div>
             <DetailLink href={`/p/${item.id}`} />
           </div>
@@ -499,7 +499,7 @@ function PartyCard({ item }: { item: PartyItem }) {
             </Row>
             <Row label="Mô tả">
               {item.short_description ? (
-                <span className="line-clamp-2 leading-relaxed text-slate-700">
+                <span className="line-clamp-2 leading-relaxed text-foreground/80">
                   {item.short_description}
                 </span>
               ) : EMPTY_VALUE}
@@ -509,7 +509,7 @@ function PartyCard({ item }: { item: PartyItem }) {
                 <>
                   <span className="text-primary">{item.location.address}</span>
                   {item.location.lat && item.location.long && (
-                    <span className="text-slate-400 text-xs ml-1">
+                    <span className="text-muted-foreground text-xs ml-1">
                       {item.location.lat.toFixed(4)},{item.location.long.toFixed(4)}
                     </span>
                   )}
@@ -545,7 +545,7 @@ function PartyCard({ item }: { item: PartyItem }) {
 export function NhaYenSlider({ items }: { items: NhaYenItem[] }) {
   if (items.length === 0) {
     return (
-      <div className="py-12 text-center text-slate-500">
+      <div className="py-12 text-center text-muted-foreground">
         Không có nhà yến nào
       </div>
     );
@@ -563,7 +563,7 @@ export function NhaYenSlider({ items }: { items: NhaYenItem[] }) {
 export function NhaSanXuatSlider({ items }: { items: NhaSanXuatItem[] }) {
   if (items.length === 0) {
     return (
-      <div className="py-12 text-center text-slate-500">
+      <div className="py-12 text-center text-muted-foreground">
         Không có nhà sản xuất nào
       </div>
     );
@@ -581,7 +581,7 @@ export function NhaSanXuatSlider({ items }: { items: NhaSanXuatItem[] }) {
 export function PartySlider({ items }: { items: PartyItem[] }) {
   if (items.length === 0) {
     return (
-      <div className="py-12 text-center text-slate-500">
+      <div className="py-12 text-center text-muted-foreground">
         Không có nhà phân phối nào
       </div>
     );

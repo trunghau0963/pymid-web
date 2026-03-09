@@ -135,7 +135,7 @@ export function NhomToYenFilter({ items }: Props) {
       </div>
 
       {/* Table */}
-      <div className="rounded-xs border overflow-hidden">
+      <div className="rounded-xl border overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/50">
@@ -164,7 +164,7 @@ export function NhomToYenFilter({ items }: Props) {
                 <TableCell className="text-right">
                   <Link
                     href={`/n/${item.id}`}
-                    className="text-red-600 hover:underline text-sm font-medium"
+                    className="text-primary hover:underline text-sm font-medium"
                   >
                     Xem →
                   </Link>

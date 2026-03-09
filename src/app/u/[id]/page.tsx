@@ -130,14 +130,14 @@ export default async function UserProfilePage({
   return (
     <div className="min-h-screen bg-background">
       {/* Breadcrumb */}
-      <div className="border-b border-slate-200">
+      <div className="border-b border-border/40">
         <div className="max-w-6xl mx-auto px-6 py-3">
           <Breadcrumb items={[{ label: "Trang chủ", href: "/" }, { label: fullname }]} />
         </div>
       </div>
 
       {/* Profile Header */}
-      <div className="border-b border-slate-200 bg-white">
+      <div className="border-b border-border/40 bg-card">
         <div className="max-w-6xl mx-auto">
           <ProfileHeader
             image={user.avatar ? getImageUrl(user.avatar.formats?.medium?.url || user.avatar.url) : undefined}
@@ -157,7 +157,7 @@ export default async function UserProfilePage({
       {/* Tabs - Modern Design with Light Gradient */}
       <div className="max-w-6xl mx-auto px-6 py-6">
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="inline-flex h-16 p-2 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 rounded-2xl justify-start gap-2 overflow-x-auto shadow-lg shadow-slate-200/50 border border-slate-200/50">
+          <TabsList className="inline-flex h-14 p-1.5 bg-muted/40 rounded-2xl justify-start gap-1.5 overflow-x-auto shadow-lg shadow-primary/[0.04] border border-border/40">
             <Tab value="profile" icon={<User className="h-4 w-4" />} label="Đại diện" />
             {hasNhaYen && (
               <Tab value="nha-yen" icon={<Home className="h-4 w-4" />} label="Nhà yến" count={totals.nhaYen} />
@@ -176,20 +176,20 @@ export default async function UserProfilePage({
               {/* Contact Card */}
               <div className="group relative">
                 {/* Card glow effect */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 via-blue-500/20 to-primary/20 rounded-sm blur opacity-0 group-hover:opacity-100 transition duration-500" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 via-blue-500/20 to-primary/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
                 
-                <section className="relative h-full rounded-sm bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-slate-200/40 overflow-hidden">
+                <section className="relative h-full rounded-2xl bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-border/40 overflow-hidden">
                   {/* Top accent bar */}
                   <div className="h-1.5 bg-gradient-to-r from-primary via-blue-500 to-primary" />
                   
                   <div className="p-8">
                     <div className="flex items-center gap-4 mb-8">
-                      <div className="w-12 h-12 rounded-sm bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-lg shadow-primary/30">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-lg shadow-primary/30">
                         <User className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-slate-800">Thông tin liên hệ</h3>
-                        <p className="text-xs text-slate-400">Các thông tin cá nhân</p>
+                        <h3 className="text-lg font-bold text-foreground">Thông tin liên hệ</h3>
+                        <p className="text-xs text-muted-foreground">Các thông tin cá nhân</p>
                       </div>
                     </div>
                     
@@ -212,22 +212,22 @@ export default async function UserProfilePage({
               {/* Membership Card - Glassmorphism */}
               <div className="group relative">
                 {/* Card glow effect */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500/20 via-primary/20 to-amber-500/20 rounded-sm blur opacity-0 group-hover:opacity-100 transition duration-500" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500/20 via-primary/20 to-amber-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
                 
-                <section className="relative h-full rounded-sm bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-slate-200/40 overflow-hidden">
+                <section className="relative h-full rounded-2xl bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-border/40 overflow-hidden">
                   {/* Top accent bar */}
                   <div className="h-1.5 bg-gradient-to-r from-amber-400 via-primary to-amber-400" />
                   
                   <div className="p-8">
                     <div className="flex items-center gap-4 mb-8">
-                      <div className="w-12 h-12 rounded-sm bg-gradient-to-br from-amber-400 to-primary flex items-center justify-center shadow-lg shadow-amber-500/30">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-primary flex items-center justify-center shadow-lg shadow-amber-500/30">
                         <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-slate-800">Thành viên PYMID</h3>
-                        <p className="text-xs text-slate-400">Thông tin thành viên</p>
+                        <h3 className="text-lg font-bold text-foreground">Thành viên PYMID</h3>
+                        <p className="text-xs text-muted-foreground">Thông tin thành viên</p>
                       </div>
                     </div>
                     
@@ -296,7 +296,7 @@ function Tab({
   return (
     <TabsTrigger
       value={value}
-      className="relative px-6 py-3 gap-2.5 rounded-xl bg-transparent text-slate-500 font-medium transition-all duration-300 ease-out
+      className="relative px-6 py-3 gap-2.5 rounded-xl bg-transparent text-muted-foreground font-medium transition-all duration-300 ease-out
         hover:text-primary hover:bg-white/80
         data-active:bg-white data-active:text-primary data-active:shadow-lg data-active:shadow-primary/20"
     >
@@ -305,7 +305,7 @@ function Tab({
       </span>
       <span className="hidden sm:inline text-sm font-semibold">{label}</span>
       {count !== undefined && (
-        <span className="text-[10px] font-bold bg-slate-200 text-slate-600 rounded-full px-2 py-0.5 min-w-[22px] text-center transition-all duration-200
+        <span className="text-[10px] font-bold bg-border text-muted-foreground rounded-full px-2 py-0.5 min-w-[22px] text-center transition-all duration-200
           data-active:bg-primary data-active:text-white">
           {count}
         </span>
@@ -328,8 +328,8 @@ function DL({
   isPhone?: boolean;
 }) {
   return (
-    <div className="group flex items-start gap-4 py-4 border-b border-slate-100 last:border-0 transition-all duration-200">
-      <dt className="w-28 shrink-0 text-slate-400 text-sm font-medium pt-0.5">{label}</dt>
+    <div className="group flex items-start gap-4 py-4 border-b border-border/40 last:border-0 transition-all duration-200">
+      <dt className="w-28 shrink-0 text-muted-foreground text-sm font-medium pt-0.5">{label}</dt>
       <dd
         className={
           highlight
@@ -337,8 +337,8 @@ function DL({
             : isLink
             ? "text-primary font-semibold hover:underline underline-offset-2 cursor-pointer"
             : isPhone
-            ? "text-slate-700 font-semibold font-mono tracking-wide"
-            : "text-slate-700 font-medium"
+            ? "text-foreground/80 font-semibold font-mono tracking-wide"
+            : "text-foreground/80 font-medium"
         }
       >
         {highlight && (

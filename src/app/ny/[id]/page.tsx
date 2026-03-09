@@ -98,7 +98,7 @@ export default async function NhaYenPage({ params }: Props) {
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         {/* YouTube / Image */}
-        <div className="rounded-xs overflow-hidden bg-muted">
+        <div className="rounded-2xl overflow-hidden bg-muted">
           {youtubeEmbed ? (
             <div className="aspect-video">
               <iframe
@@ -128,11 +128,11 @@ export default async function NhaYenPage({ params }: Props) {
         </div>
 
         {/* Info Table */}
-        <Card>
+        <Card className="rounded-2xl">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2 mb-1">
-              <Home className="h-5 w-5 text-red-600" />
-              <CardTitle className="text-xl text-red-700">
+              <Home className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl text-primary">
                 Truy Xuất Thông Tin Nhà Yến
               </CardTitle>
             </div>
@@ -142,7 +142,7 @@ export default async function NhaYenPage({ params }: Props) {
               <InfoRow
                 label="Tên nhà yến"
                 value={data.name}
-                valueClassName="text-red-600 font-semibold"
+                valueClassName="text-primary font-semibold"
               />
               <Separator />
               {data.phan_cap && (
@@ -211,10 +211,10 @@ export default async function NhaYenPage({ params }: Props) {
 
       {/* Tabs Navigation */}
       <Tabs defaultValue="info" className="space-y-6">
-        <TabsList className="w-full justify-start flex-wrap h-auto gap-1 bg-muted/50 p-1 rounded-xs">
+        <TabsList className="w-full justify-start flex-wrap h-auto gap-1.5 bg-muted/40 p-1.5 rounded-2xl border border-border/40">
           <TabsTrigger
             value="info"
-            className="data-[state=active]:bg-red-600 data-[state=active]:text-white rounded-xs gap-1.5 text-xs sm:text-sm"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
           >
             <Home className="h-4 w-4" />
             <span className="hidden sm:inline">Thông tin nhà yến</span>
@@ -222,7 +222,7 @@ export default async function NhaYenPage({ params }: Props) {
           </TabsTrigger>
           <TabsTrigger
             value="sold"
-            className="data-[state=active]:bg-red-600 data-[state=active]:text-white rounded-xs gap-1.5 text-xs sm:text-sm"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
           >
             <Package className="h-4 w-4" />
             <span className="hidden sm:inline">Thùng tổ yến đã bán</span>
@@ -230,7 +230,7 @@ export default async function NhaYenPage({ params }: Props) {
           </TabsTrigger>
           <TabsTrigger
             value="diary"
-            className="data-[state=active]:bg-red-600 data-[state=active]:text-white rounded-xs gap-1.5 text-xs sm:text-sm"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
           >
             <BookOpen className="h-4 w-4" />
             <span className="hidden sm:inline">Nhật ký khép kín</span>
@@ -238,7 +238,7 @@ export default async function NhaYenPage({ params }: Props) {
           </TabsTrigger>
           <TabsTrigger
             value="environment"
-            className="data-[state=active]:bg-red-600 data-[state=active]:text-white rounded-xs gap-1.5 text-xs sm:text-sm"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
           >
             <Gauge className="h-4 w-4" />
             <span className="hidden sm:inline">Thiết bị đo lường</span>
@@ -246,7 +246,7 @@ export default async function NhaYenPage({ params }: Props) {
           </TabsTrigger>
           <TabsTrigger
             value="owner"
-            className="data-[state=active]:bg-red-600 data-[state=active]:text-white rounded-xs gap-1.5 text-xs sm:text-sm"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
           >
             <User className="h-4 w-4" />
             <span className="hidden sm:inline">Đại diện nhà yến</span>
@@ -254,7 +254,7 @@ export default async function NhaYenPage({ params }: Props) {
           </TabsTrigger>
           <TabsTrigger
             value="harvest"
-            className="data-[state=active]:bg-red-600 data-[state=active]:text-white rounded-xs gap-1.5 text-xs sm:text-sm"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
           >
             <Scissors className="h-4 w-4" />
             <span className="hidden sm:inline">Quy trình hái tổ</span>
@@ -267,7 +267,7 @@ export default async function NhaYenPage({ params }: Props) {
           <div className="space-y-6">
             {/* Images Gallery */}
             {data.image && data.image.length > 0 && (
-              <Card>
+              <Card className="rounded-2xl">
                 <CardHeader>
                   <CardTitle className="text-lg">Hình Ảnh Nhà Yến</CardTitle>
                 </CardHeader>
@@ -276,7 +276,7 @@ export default async function NhaYenPage({ params }: Props) {
                     {data.image.map((img) => (
                       <div
                         key={img.id}
-                        className="rounded-xs overflow-hidden aspect-square"
+                        className="rounded-xl overflow-hidden aspect-square"
                       >
                         <img
                           src={getImageUrl(
@@ -293,10 +293,10 @@ export default async function NhaYenPage({ params }: Props) {
             )}
 
             {/* Detailed Info */}
-            <Card>
+            <Card className="rounded-2xl">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
-                  <ShieldCheck className="h-5 w-5 text-red-600" />
+                  <ShieldCheck className="h-5 w-5 text-primary" />
                   Thông Tin Chi Tiết
                 </CardTitle>
               </CardHeader>
@@ -328,10 +328,10 @@ export default async function NhaYenPage({ params }: Props) {
 
             {/* Location */}
             {data.location && (
-              <Card>
+              <Card className="rounded-2xl">
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
-                    <MapPin className="h-5 w-5 text-red-600" />
+                    <MapPin className="h-5 w-5 text-primary" />
                     Vị Trí Nhà Yến
                   </CardTitle>
                 </CardHeader>
@@ -341,7 +341,7 @@ export default async function NhaYenPage({ params }: Props) {
                       {data.location.address}
                     </p>
                   )}
-                  <div className="rounded-xs overflow-hidden h-64">
+                  <div className="rounded-xl overflow-hidden h-64">
                     <iframe
                       src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${data.location.lat},${data.location.long}&zoom=15`}
                       className="w-full h-full border-0"
@@ -358,10 +358,10 @@ export default async function NhaYenPage({ params }: Props) {
 
         {/* Tab: Thùng tổ yến đã bán */}
         <TabsContent value="sold">
-          <Card>
+          <Card className="rounded-2xl">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <Package className="h-5 w-5 text-red-600" />
+                <Package className="h-5 w-5 text-primary" />
                 Thùng Tổ Yến Đã Bán
               </CardTitle>
             </CardHeader>
@@ -373,10 +373,10 @@ export default async function NhaYenPage({ params }: Props) {
 
         {/* Tab: Nhật ký khép kín */}
         <TabsContent value="diary">
-          <Card>
+          <Card className="rounded-2xl">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-red-600" />
+                <BookOpen className="h-5 w-5 text-primary" />
                 Nhật Ký Khép Kín
               </CardTitle>
             </CardHeader>
@@ -388,10 +388,10 @@ export default async function NhaYenPage({ params }: Props) {
 
         {/* Tab: Thông số môi trường / Thiết bị đo lường */}
         <TabsContent value="environment">
-          <Card>
+          <Card className="rounded-2xl">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <Gauge className="h-5 w-5 text-red-600" />
+                <Gauge className="h-5 w-5 text-primary" />
                 Thiết Bị Đo Lường Và Chỉ Số
               </CardTitle>
             </CardHeader>
@@ -405,7 +405,7 @@ export default async function NhaYenPage({ params }: Props) {
                         const imgUrl = src.startsWith("http")
                           ? src
                           : `https://api.pymid.com${src}`;
-                        return `<img src="${imgUrl}" alt="${alt}" class="rounded-xs max-w-full" />`;
+                        return `<img src="${imgUrl}" alt="${alt}" class="rounded-xl max-w-full" />`;
                       })
                       .replace(/\n/g, "<br/>"),
                   }}
@@ -422,10 +422,10 @@ export default async function NhaYenPage({ params }: Props) {
         {/* Tab: Đại diện nhà yến */}
         <TabsContent value="owner">
           {data.owner ? (
-            <Card>
+            <Card className="rounded-2xl">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
-                  <User className="h-5 w-5 text-red-600" />
+                  <User className="h-5 w-5 text-primary" />
                   Đại Diện Nhà Yến
                 </CardTitle>
               </CardHeader>
@@ -441,7 +441,7 @@ export default async function NhaYenPage({ params }: Props) {
                         alt={
                           data.owner.bio?.fullname || data.owner.username
                         }
-                        className="w-40 h-40 rounded-xs object-cover"
+                        className="w-40 h-40 rounded-xl object-cover"
                       />
                     </div>
                   )}
@@ -469,7 +469,7 @@ export default async function NhaYenPage({ params }: Props) {
                     )}
                     <Link
                       href={`/u/${data.owner.id}`}
-                      className="inline-flex items-center gap-1 text-sm text-red-600 hover:underline"
+                      className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
                     >
                       Xem trang cá nhân
                       <ExternalLink className="h-3 w-3" />
@@ -480,7 +480,7 @@ export default async function NhaYenPage({ params }: Props) {
             </Card>
           ) : (
             <Card>
-              <CardContent className="py-8 text-center text-muted-foreground">
+              <CardContent className="py-8 text-center text-muted-foreground rounded-2xl">
                 Chưa có thông tin đại diện nhà yến
               </CardContent>
             </Card>
@@ -489,10 +489,10 @@ export default async function NhaYenPage({ params }: Props) {
 
         {/* Tab: Quy trình hái tổ */}
         <TabsContent value="harvest">
-          <Card>
+          <Card className="rounded-2xl">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <Scissors className="h-5 w-5 text-red-600" />
+                <Scissors className="h-5 w-5 text-primary" />
                 Quy Trình Hái Tổ
               </CardTitle>
             </CardHeader>
@@ -506,11 +506,11 @@ export default async function NhaYenPage({ params }: Props) {
                         const imgUrl = src.startsWith("http")
                           ? src
                           : `https://api.pymid.com${src}`;
-                        return `<img src="${imgUrl}" alt="${alt}" class="rounded-xs max-w-full" />`;
+                        return `<img src="${imgUrl}" alt="${alt}" class="rounded-xl max-w-full" />`;
                       })
                       .replace(
                         /<iframe([^>]*)><\/iframe>/g,
-                        '<div class="aspect-video rounded-xs overflow-hidden"><iframe$1 class="w-full h-full"></iframe></div>'
+                        '<div class="aspect-video rounded-xl overflow-hidden"><iframe$1 class="w-full h-full"></iframe></div>'
                       )
                       .replace(/\n/g, "<br/>"),
                   }}
@@ -555,8 +555,8 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="flex items-center gap-3 p-3 rounded-xs bg-muted/50">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xs bg-red-50 text-red-600">
+    <div className="flex items-center gap-3 p-4 rounded-xl bg-muted/40 border border-border/40">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
         {icon}
       </div>
       <div>
