@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
   Store,
   MapPin,
@@ -75,16 +76,16 @@ function InfoRow({
   if (!value) return null;
   return (
     <div className="flex items-start gap-3 py-2">
-      {Icon && <Icon className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />}
+      {Icon && <Icon className="h-4 w-4 text-slate-500 mt-0.5 shrink-0" />}
       <div className="flex-1 min-w-0">
-        <span className="text-sm text-muted-foreground">{label}</span>
-        <div className="font-medium">
+        <span className="text-sm text-slate-600">{label}</span>
+        <div className="font-medium text-slate-900">
           {href ? (
             <a
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline inline-flex items-center gap-1"
+              className="text-primary hover:text-primary/80 hover:underline inline-flex items-center gap-1"
             >
               {value}
               <ExternalLink className="h-3 w-3" />
@@ -124,21 +125,15 @@ export default async function ShopPage({ params }: Props) {
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       {/* Breadcrumb */}
-      <nav className="text-sm text-muted-foreground mb-6">
-        <Link href="/" className="hover:text-foreground">
-          Trang chủ
-        </Link>
-        <span className="mx-2">/</span>
-        {party && (
-          <>
-            <Link href={`/p/${party.id}`} className="hover:text-foreground">
-              {party.name}
-            </Link>
-            <span className="mx-2">/</span>
-          </>
-        )}
-        <span className="text-foreground">{data.name}</span>
-      </nav>
+      <div className="mb-6">
+        <Breadcrumb 
+          items={[
+            { label: "Trang chủ", href: "/" },
+            ...(party ? [{ label: party.name, href: `/p/${party.id}` }] : []),
+            { label: data.name }
+          ]} 
+        />
+      </div>
 
       {/* Status Badge */}
       {!data.active && (
@@ -152,7 +147,7 @@ export default async function ShopPage({ params }: Props) {
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         {/* YouTube / Image */}
-        <div className="rounded-xs overflow-hidden bg-muted">
+        <div className="rounded-lg overflow-hidden bg-slate-900">
           {youtubeEmbed ? (
             <div className="aspect-video">
               <iframe
@@ -170,18 +165,18 @@ export default async function ShopPage({ params }: Props) {
               className="w-full aspect-video object-cover"
             />
           ) : (
-            <div className="aspect-video flex items-center justify-center text-muted-foreground">
+            <div className="aspect-video flex items-center justify-center text-slate-400">
               <Store className="h-16 w-16" />
             </div>
           )}
         </div>
 
         {/* Info Card */}
-        <Card className="rounded-xs">
+        <Card className="rounded-lg border-slate-200">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2 mb-1">
-              <Store className="h-5 w-5 text-green-600" />
-              <CardTitle className="text-xl text-green-700">
+              <Store className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl text-primary">
                 {data.name}
               </CardTitle>
             </div>
@@ -233,12 +228,12 @@ export default async function ShopPage({ params }: Props) {
 
       {/* Tabs */}
       <Tabs defaultValue="info" className="space-y-6">
-        <TabsList className="flex flex-wrap h-auto gap-1 bg-muted/50 p-1 rounded-xs">
+        <TabsList className="flex flex-wrap h-auto gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
               value={tab.id}
-              className="rounded-xs data-[state=active]:bg-background"
+              className="rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
             >
               {tab.label}
             </TabsTrigger>
@@ -247,21 +242,21 @@ export default async function ShopPage({ params }: Props) {
 
         {/* Info Tab */}
         <TabsContent value="info">
-          <Card className="rounded-xs">
+          <Card className="rounded-lg border-slate-200">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5" />
+                <FileText className="h-5 w-5 text-primary" />
                 Giới thiệu cửa hàng
               </CardTitle>
             </CardHeader>
             <CardContent>
               {data.description ? (
                 <div
-                  className="prose prose-sm max-w-none"
+                  className="prose prose-sm max-w-none text-slate-700"
                   dangerouslySetInnerHTML={{ __html: data.description }}
                 />
               ) : (
-                <p className="text-muted-foreground">Chưa có thông tin</p>
+                <p className="text-slate-500">Chưa có thông tin</p>
               )}
             </CardContent>
           </Card>
@@ -270,51 +265,51 @@ export default async function ShopPage({ params }: Props) {
         {/* Party Tab */}
         {party && (
           <TabsContent value="party">
-            <Card className="rounded-xs">
+            <Card className="rounded-lg border-slate-200">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Building2 className="h-5 w-5" />
+                  <Building2 className="h-5 w-5 text-primary" />
                   Nhà phân phối
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <Link
                   href={`/p/${party.id}`}
-                  className="block hover:bg-muted p-4 rounded-xs transition-colors"
+                  className="block hover:bg-slate-50 p-4 rounded-lg transition-colors"
                 >
                   <div className="flex items-start gap-4">
                     {party.image?.[0] ? (
                       <img
                         src={getImageUrl(party.image[0].url)}
                         alt={party.name}
-                        className="w-20 h-20 object-cover rounded-xs"
+                        className="w-20 h-20 object-cover rounded-lg"
                       />
                     ) : (
-                      <div className="w-20 h-20 bg-muted flex items-center justify-center rounded-xs">
-                        <Building2 className="h-8 w-8 text-muted-foreground" />
+                      <div className="w-20 h-20 bg-slate-100 flex items-center justify-center rounded-lg">
+                        <Building2 className="h-8 w-8 text-slate-400" />
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-lg">{party.name}</h3>
+                      <h3 className="font-semibold text-lg text-slate-900">{party.name}</h3>
                       {party.short_description && (
-                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                        <p className="text-sm text-slate-600 mt-1 line-clamp-2">
                           {party.short_description}
                         </p>
                       )}
                       {party.location?.address && (
-                        <p className="text-sm text-muted-foreground mt-2 flex items-center gap-1">
+                        <p className="text-sm text-slate-600 mt-2 flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
                           {party.location.address}
                         </p>
                       )}
                       <div className="flex gap-2 mt-3 flex-wrap">
                         {party.license && (
-                          <Badge variant="outline" className="rounded-xs">
+                          <Badge variant="outline" className="rounded-lg">
                             {party.license}
                           </Badge>
                         )}
                         {party.code && (
-                          <Badge variant="secondary" className="rounded-xs">
+                          <Badge variant="secondary" className="rounded-lg">
                             Mã: {party.code}
                           </Badge>
                         )}
@@ -325,13 +320,13 @@ export default async function ShopPage({ params }: Props) {
 
                 {/* Party Owner */}
                 {party.owner && (
-                  <div className="mt-6 pt-4 border-t">
-                    <p className="text-sm font-medium text-muted-foreground mb-3">
+                  <div className="mt-6 pt-4 border-t border-slate-200">
+                    <p className="text-sm font-medium text-slate-600 mb-3">
                       Chủ nhà phân phối
                     </p>
                     <Link
                       href={`/u/${party.owner.id}`}
-                      className="flex items-center gap-3 hover:bg-muted p-2 rounded-xs transition-colors"
+                      className="flex items-center gap-3 hover:bg-slate-50 p-2 rounded-lg transition-colors"
                     >
                       <Avatar className="h-10 w-10">
                         {party.owner.avatar ? (
@@ -347,11 +342,11 @@ export default async function ShopPage({ params }: Props) {
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="font-medium">
+                        <p className="font-medium text-slate-900">
                           {party.owner.bio?.fullname || party.owner.username}
                         </p>
                         {party.owner.who_am_i && (
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-slate-600">
                             {party.owner.who_am_i}
                           </p>
                         )}
@@ -367,10 +362,10 @@ export default async function ShopPage({ params }: Props) {
         {/* Team Tab */}
         {kyThuats.length > 0 && (
           <TabsContent value="team">
-            <Card className="rounded-xs">
+            <Card className="rounded-lg border-slate-200">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
+                  <Users className="h-5 w-5 text-primary" />
                   Nhân viên cửa hàng ({kyThuats.length})
                 </CardTitle>
               </CardHeader>
@@ -378,7 +373,7 @@ export default async function ShopPage({ params }: Props) {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {kyThuats.map((user) => (
                     <Link key={user.id} href={`/u/${user.id}`}>
-                      <Card className="rounded-xs hover:shadow-md transition-shadow">
+                      <Card className="rounded-lg hover:shadow-md transition-shadow border-slate-200">
                         <CardContent className="p-4 flex items-center gap-4">
                           <Avatar className="h-12 w-12">
                             {user.avatar ? (
@@ -394,11 +389,11 @@ export default async function ShopPage({ params }: Props) {
                             </AvatarFallback>
                           </Avatar>
                           <div className="min-w-0">
-                            <p className="font-semibold truncate">
+                            <p className="font-semibold truncate text-slate-900">
                               {user.bio?.fullname || user.username}
                             </p>
                             {user.who_am_i && (
-                              <p className="text-sm text-muted-foreground truncate">
+                              <p className="text-sm text-slate-600 truncate">
                                 {user.who_am_i}
                               </p>
                             )}
@@ -416,14 +411,14 @@ export default async function ShopPage({ params }: Props) {
 
       {/* Gallery */}
       {data.image && data.image.length > 1 && (
-        <Card className="mt-8 rounded-xs">
+        <Card className="mt-8 rounded-lg border-slate-200">
           <CardHeader>
             <CardTitle>Hình ảnh cửa hàng</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {data.image.map((img) => (
-                <div key={img.id} className="rounded-xs overflow-hidden">
+                <div key={img.id} className="rounded-lg overflow-hidden">
                   <img
                     src={getImageUrl(img.url)}
                     alt={img.alternativeText || data.name}
@@ -438,15 +433,15 @@ export default async function ShopPage({ params }: Props) {
 
       {/* Map */}
       {data.location?.lat && data.location?.long && (
-        <Card className="mt-8 rounded-xs">
+        <Card className="mt-8 rounded-lg border-slate-200">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <MapPin className="h-5 w-5" />
+              <MapPin className="h-5 w-5 text-primary" />
               Vị trí cửa hàng
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="rounded-xs overflow-hidden">
+            <div className="rounded-lg overflow-hidden">
               <iframe
                 src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1000!2d${data.location.long}!3d${data.location.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDQ5JzUwLjMiTiAxMDbCsDQyJzQyLjAiRQ!5e0!3m2!1svi!2svn!4v1234567890!5m2!1svi!2svn`}
                 className="w-full h-64"
@@ -456,7 +451,7 @@ export default async function ShopPage({ params }: Props) {
               />
             </div>
             {data.location.address && (
-              <p className="text-sm text-muted-foreground mt-3">
+              <p className="text-sm text-slate-600 mt-3">
                 {data.location.address}
               </p>
             )}

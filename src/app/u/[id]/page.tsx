@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import {
   getUserNhaYens,
   getUserNhaSanXuats,
@@ -9,9 +8,9 @@ import {
   formatDateTime,
   yearsSince,
 } from "@/lib/api";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { ProfileHeader } from "@/components/profile-header";
 import {
   User,
   MapPin,
@@ -20,25 +19,18 @@ import {
   Home,
   Factory,
   Store,
-  ExternalLink,
-  Award,
-  Calendar,
-  Shield,
-  ArrowRight,
-  Ruler,
-  Layers,
-  Globe,
 } from "lucide-react";
 import type {
-  NhaYenItem,
-  NhaSanXuatItem,
-  PartyItem,
   UserBasic,
   UserNhaYensResponse,
   UserNhaSanXuatsResponse,
   UserPartiesResponse,
-  ImageItem,
 } from "@/lib/api";
+import {
+  NhaYenSlider,
+  NhaSanXuatSlider,
+  PartySlider,
+} from "./user-content-sliders";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -136,100 +128,36 @@ export default async function UserProfilePage({
   const hasParties = parties.length > 0;
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Compact Breadcrumb */}
-      <div className="border-b">
+    <div className="min-h-screen bg-background">
+      {/* Breadcrumb */}
+      <div className="border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-6 py-3">
-          <nav className="text-sm text-gray-500">
-            <Link href="/" className="hover:text-gray-900 transition-colors">
-              Trang chủ
-            </Link>
-            <span className="mx-2 text-gray-300">/</span>
-            <span className="text-gray-900 font-medium">{fullname}</span>
-          </nav>
+          <Breadcrumb items={[{ label: "Trang chủ", href: "/" }, { label: fullname }]} />
         </div>
       </div>
 
-      {/* Profile Header — minimal, airy */}
-      <div className="border-b bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-6xl mx-auto px-6 py-10">
-          <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
-            {/* Avatar */}
-            <div className="shrink-0">
-              {user.avatar ? (
-                <img
-                  src={getImageUrl(
-                    user.avatar.formats?.medium?.url ||
-                      user.avatar.url
-                  )}
-                  alt={fullname}
-                  className="w-28 h-28 rounded-full object-cover ring-4 ring-white shadow-md"
-                />
-              ) : (
-                <div className="w-28 h-28 rounded-full bg-gray-100 flex items-center justify-center ring-4 ring-white shadow-md">
-                  <User className="h-12 w-12 text-gray-400" />
-                </div>
-              )}
-            </div>
-
-            {/* Name + meta */}
-            <div className="flex-1 text-center sm:text-left">
-              <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-                {fullname}
-              </h1>
-
-              <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-2">
-                {user.who_am_i && (
-                  <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-red-50 text-red-700">
-                    {user.who_am_i}
-                  </span>
-                )}
-                {user.province && (
-                  <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">
-                    <MapPin className="h-3 w-3" />
-                    {user.province}
-                  </span>
-                )}
-                {user.show_vip && (
-                  <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">
-                    <Award className="h-3 w-3" />
-                    VIP
-                  </span>
-                )}
-              </div>
-
-              {user.bio?.description && (
-                <p className="mt-3 text-sm text-gray-500 max-w-xl leading-relaxed">
-                  {user.bio.description}
-                </p>
-              )}
-            </div>
-
-            {/* Stats — clean number blocks */}
-            <div className="flex gap-6 sm:gap-8">
-              {[
-                { n: totals.nhaYen, label: "Nhà yến" },
-                { n: totals.nhaSanXuat, label: "Nhà SX" },
-                { n: totals.party, label: "Nhà PP" },
-              ].map((s) => (
-                <div key={s.label} className="text-center">
-                  <p className="text-2xl font-bold text-gray-900">
-                    {s.n}
-                  </p>
-                  <p className="text-xs text-gray-400 mt-0.5 uppercase tracking-wide">
-                    {s.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* Profile Header */}
+      <div className="border-b border-slate-200 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <ProfileHeader
+            image={user.avatar ? getImageUrl(user.avatar.formats?.medium?.url || user.avatar.url) : undefined}
+            name={fullname}
+            title={user.who_am_i}
+            location={user.province}
+            description={user.bio?.description}
+            contactInfo={[
+              ...(user.bio?.phoneNumber ? [{ label: "Điện thoại", value: user.bio.phoneNumber, icon: <Phone className="h-4 w-4" />, href: `tel:${user.bio.phoneNumber}` }] : []),
+              ...(user.bio?.email ? [{ label: "Email", value: user.bio.email, icon: <Mail className="h-4 w-4" />, href: `mailto:${user.bio.email}` }] : []),
+              ...(user.province ? [{ label: "Địa chỉ", value: user.province, icon: <MapPin className="h-4 w-4" /> }] : []),
+            ]}
+          />
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="max-w-6xl mx-auto px-6">
+      {/* Tabs - Modern Design with Light Gradient */}
+      <div className="max-w-6xl mx-auto px-6 py-6">
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="w-full h-auto p-0 bg-transparent rounded-none border-b justify-start gap-0 overflow-x-auto">
+          <TabsList className="inline-flex h-16 p-2 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 rounded-2xl justify-start gap-2 overflow-x-auto shadow-lg shadow-slate-200/50 border border-slate-200/50">
             <Tab value="profile" icon={<User className="h-4 w-4" />} label="Đại diện" />
             {hasNhaYen && (
               <Tab value="nha-yen" icon={<Home className="h-4 w-4" />} label="Nhà yến" count={totals.nhaYen} />
@@ -243,75 +171,105 @@ export default async function UserProfilePage({
           </TabsList>
 
           {/* ───── Profile Tab ───── */}
-          <TabsContent value="profile" className="py-8">
+          <TabsContent value="profile" className="pt-10">
             <div className="grid md:grid-cols-2 gap-8">
-              {/* Contact */}
-              <section>
-                <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">
-                  Thông tin liên hệ
-                </h3>
-                <dl className="divide-y divide-gray-100">
-                  <DL label="Họ và tên" value={fullname} />
-                  {user.bio?.address && (
-                    <DL label="Địa chỉ" value={user.bio.address} />
-                  )}
-                  {user.bio?.phoneNumber && (
-                    <DL label="Số điện thoại" value={user.bio.phoneNumber} />
-                  )}
-                  {user.email && (
-                    <DL label="Email" value={user.email} />
-                  )}
-                </dl>
-              </section>
+              {/* Contact Card */}
+              <div className="group relative">
+                {/* Card glow effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 via-blue-500/20 to-primary/20 rounded-sm blur opacity-0 group-hover:opacity-100 transition duration-500" />
+                
+                <section className="relative h-full rounded-sm bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-slate-200/40 overflow-hidden">
+                  {/* Top accent bar */}
+                  <div className="h-1.5 bg-gradient-to-r from-primary via-blue-500 to-primary" />
+                  
+                  <div className="p-8">
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className="w-12 h-12 rounded-sm bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-lg shadow-primary/30">
+                        <User className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-slate-800">Thông tin liên hệ</h3>
+                        <p className="text-xs text-slate-400">Các thông tin cá nhân</p>
+                      </div>
+                    </div>
+                    
+                    <dl className="space-y-4">
+                      <DL label="Họ và tên" value={fullname} />
+                      {user.bio?.address && (
+                        <DL label="Địa chỉ" value={user.bio.address} />
+                      )}
+                      {user.bio?.phoneNumber && (
+                        <DL label="Số điện thoại" value={user.bio.phoneNumber} isPhone />
+                      )}
+                      {user.email && (
+                        <DL label="Email" value={user.email} isLink />
+                      )}
+                    </dl>
+                  </div>
+                </section>
+              </div>
 
-              {/* Membership */}
-              <section>
-                <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">
-                  Thành viên PYMID
-                </h3>
-                <dl className="divide-y divide-gray-100">
-                  {user.who_am_i && (
-                    <DL label="Vai trò" value={user.who_am_i} />
-                  )}
-                  {user.province && (
-                    <DL label="Tỉnh/Thành" value={user.province} />
-                  )}
-                  <DL
-                    label="Tham gia"
-                    value={`${formatDateTime(user.created_at)} (${yearsSince(user.created_at)} năm)`}
-                  />
-                  {user.show_vip && (
-                    <DL label="Hạng" value="VIP" highlight />
-                  )}
-                </dl>
-              </section>
+              {/* Membership Card - Glassmorphism */}
+              <div className="group relative">
+                {/* Card glow effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500/20 via-primary/20 to-amber-500/20 rounded-sm blur opacity-0 group-hover:opacity-100 transition duration-500" />
+                
+                <section className="relative h-full rounded-sm bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-slate-200/40 overflow-hidden">
+                  {/* Top accent bar */}
+                  <div className="h-1.5 bg-gradient-to-r from-amber-400 via-primary to-amber-400" />
+                  
+                  <div className="p-8">
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className="w-12 h-12 rounded-sm bg-gradient-to-br from-amber-400 to-primary flex items-center justify-center shadow-lg shadow-amber-500/30">
+                        <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-slate-800">Thành viên PYMID</h3>
+                        <p className="text-xs text-slate-400">Thông tin thành viên</p>
+                      </div>
+                    </div>
+                    
+                    <dl className="space-y-4">
+                      {user.who_am_i && (
+                        <DL label="Vai trò" value={user.who_am_i} />
+                      )}
+                      {user.province && (
+                        <DL label="Tỉnh/Thành" value={user.province} />
+                      )}
+                      <DL
+                        label="Tham gia"
+                        value={`${formatDateTime(user.created_at)} (${yearsSince(user.created_at)} năm)`}
+                      />
+                      {user.show_vip && (
+                        <DL label="Hạng" value="VIP" highlight />
+                      )}
+                    </dl>
+                  </div>
+                </section>
+              </div>
             </div>
           </TabsContent>
 
           {/* ───── Nhà yến Tab ───── */}
           {hasNhaYen && (
-            <TabsContent value="nha-yen" className="py-8 space-y-5">
-              {nhaYens.map((item) => (
-                <NhaYenCard key={item.id} item={item} />
-              ))}
+            <TabsContent value="nha-yen" className="py-8">
+              <NhaYenSlider items={nhaYens} />
             </TabsContent>
           )}
 
           {/* ───── Nhà sản xuất Tab ───── */}
           {hasNhaSanXuat && (
-            <TabsContent value="nha-san-xuat" className="py-8 space-y-5">
-              {nhaSanXuats.map((item) => (
-                <NhaSanXuatCard key={item.id} item={item} />
-              ))}
+            <TabsContent value="nha-san-xuat" className="py-8">
+              <NhaSanXuatSlider items={nhaSanXuats} />
             </TabsContent>
           )}
 
           {/* ───── Nhà phân phối Tab ───── */}
           {hasParties && (
-            <TabsContent value="nha-phan-phoi" className="py-8 space-y-5">
-              {parties.map((item) => (
-                <PartyCard key={item.id} item={item} />
-              ))}
+            <TabsContent value="nha-phan-phoi" className="py-8">
+              <PartySlider items={parties} />
             </TabsContent>
           )}
         </Tabs>
@@ -338,12 +296,17 @@ function Tab({
   return (
     <TabsTrigger
       value={value}
-      className="px-5 py-3.5 gap-2 rounded-none border-b-2 border-transparent data-[state=active]:border-red-600 data-[state=active]:text-red-600 data-[state=active]:shadow-none bg-transparent text-gray-500 hover:text-gray-900 transition-colors"
+      className="relative px-6 py-3 gap-2.5 rounded-xl bg-transparent text-slate-500 font-medium transition-all duration-300 ease-out
+        hover:text-primary hover:bg-white/80
+        data-active:bg-white data-active:text-primary data-active:shadow-lg data-active:shadow-primary/20"
     >
-      {icon}
-      <span className="hidden sm:inline text-sm">{label}</span>
+      <span className="transition-transform duration-200">
+        {icon}
+      </span>
+      <span className="hidden sm:inline text-sm font-semibold">{label}</span>
       {count !== undefined && (
-        <span className="text-[11px] font-medium bg-gray-100 text-gray-500 rounded-full px-1.5 py-0.5 min-w-[20px] text-center data-[state=active]:bg-red-50 data-[state=active]:text-red-600">
+        <span className="text-[10px] font-bold bg-slate-200 text-slate-600 rounded-full px-2 py-0.5 min-w-[22px] text-center transition-all duration-200
+          data-active:bg-primary data-active:text-white">
           {count}
         </span>
       )}
@@ -355,402 +318,36 @@ function DL({
   label,
   value,
   highlight,
+  isLink,
+  isPhone,
 }: {
   label: string;
   value: string;
   highlight?: boolean;
+  isLink?: boolean;
+  isPhone?: boolean;
 }) {
   return (
-    <div className="flex py-3 text-sm">
-      <dt className="w-36 shrink-0 text-gray-400">{label}</dt>
+    <div className="group flex items-start gap-4 py-4 border-b border-slate-100 last:border-0 transition-all duration-200">
+      <dt className="w-28 shrink-0 text-slate-400 text-sm font-medium pt-0.5">{label}</dt>
       <dd
         className={
           highlight
-            ? "font-semibold text-amber-600"
-            : "text-gray-900"
+            ? "inline-flex items-center gap-1.5 font-bold text-amber-500 bg-gradient-to-r from-amber-50 to-amber-100 px-4 py-1.5 rounded-full text-xs uppercase tracking-wide shadow-sm border border-amber-200/50"
+            : isLink
+            ? "text-primary font-semibold hover:underline underline-offset-2 cursor-pointer"
+            : isPhone
+            ? "text-slate-700 font-semibold font-mono tracking-wide"
+            : "text-slate-700 font-medium"
         }
       >
+        {highlight && (
+          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        )}
         {value}
       </dd>
-    </div>
-  );
-}
-
-function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
-  if (!images.length) {
-    return (
-      <div className="aspect-[4/3] bg-gray-100 rounded-sm flex items-center justify-center">
-        <span className="text-gray-300 text-sm">Không có ảnh</span>
-      </div>
-    );
-  }
-
-  const main = images[0];
-  const thumbs = images.slice(1, 5);
-
-  return (
-    <div className="space-y-2">
-      <div className="aspect-[4/3] rounded-sm overflow-hidden bg-gray-100">
-        <img
-          src={getImageUrl(
-            main.formats?.medium?.url || main.url
-          )}
-          alt={alt}
-          className="w-full h-full object-cover"
-        />
-      </div>
-      {thumbs.length > 0 && (
-        <div className="flex gap-1.5">
-          {thumbs.map((img, i) => (
-            <div
-              key={i}
-              className="w-14 h-14 rounded-sm overflow-hidden bg-gray-100"
-            >
-              <img
-                src={getImageUrl(
-                  img.formats?.thumbnail?.url || img.url
-                )}
-                alt={`${alt} ${i + 2}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function Row({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex text-sm border-b border-gray-50 last:border-0">
-      <div className="w-[38%] shrink-0 py-2.5 pr-4 text-gray-400">
-        {label}
-      </div>
-      <div className="py-2.5 text-gray-800">{children}</div>
-    </div>
-  );
-}
-
-function DetailLink({
-  href,
-  label,
-}: {
-  href: string;
-  label?: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="inline-flex items-center gap-1 text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
-    >
-      {label || "Chi tiết"}
-      <ArrowRight className="h-3.5 w-3.5" />
-    </Link>
-  );
-}
-
-function ExtLink({ href, text }: { href: string; text?: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-red-600 hover:text-red-700 hover:underline inline-flex items-center gap-1 transition-colors"
-    >
-      {text || href}
-      <ExternalLink className="h-3 w-3" />
-    </a>
-  );
-}
-
-/* ──────────────────────────────
-   Item Cards
-   ────────────────────────────── */
-
-function NhaYenCard({ item }: { item: NhaYenItem }) {
-  const images = [...(item.image || []), ...(item.avatar || [])];
-
-  return (
-    <div className="bg-white border border-gray-100 rounded-sm overflow-hidden hover:shadow-sm transition-shadow">
-      <div className="flex flex-col md:flex-row">
-        <div className="md:w-[300px] shrink-0 p-5">
-          <Gallery images={images} alt={item.name} />
-        </div>
-
-        <div className="flex-1 p-5 md:pl-0">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <Home className="h-5 w-5 text-red-600" />
-                <h3 className="font-semibold text-gray-900">
-                  {item.name}
-                </h3>
-              </div>
-              {item.phan_cap && (
-                <span
-                  className="text-xs font-medium px-2 py-0.5 rounded-full border"
-                  style={{
-                    borderColor: item.phan_cap.color,
-                    color: item.phan_cap.color,
-                  }}
-                >
-                  {item.phan_cap.title}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-3">
-              {item.is_demo && (
-                <Badge variant="secondary" className="text-xs">Demo</Badge>
-              )}
-              <DetailLink href={`/ny/${item.id}`} />
-            </div>
-          </div>
-
-          <Separator className="mb-3" />
-
-          {/* Data rows */}
-          <div>
-            <Row label="Tên nhà yến">
-              <Link
-                href={`/ny/${item.id}`}
-                className="text-red-600 font-medium hover:underline"
-              >
-                {item.name}
-              </Link>
-            </Row>
-            {item.location?.address && (
-              <Row label="Địa chỉ">
-                <span className="text-red-600">
-                  {item.location.address}
-                </span>
-                {item.location.lat && item.location.long && (
-                  <span className="text-gray-400 text-xs ml-1">
-                    {item.location.lat.toFixed(7)},
-                    {item.location.long.toFixed(7)}
-                  </span>
-                )}
-              </Row>
-            )}
-            {item.phan_cap && (
-              <Row label="Phân cấp nhà yến">
-                <span className="font-semibold" style={{ color: item.phan_cap.color }}>
-                  {item.phan_cap.title}
-                </span>
-              </Row>
-            )}
-            {item.short_description && (
-              <Row label="Mô tả">
-                <span className="line-clamp-3 leading-relaxed">
-                  {item.short_description}
-                </span>
-              </Row>
-            )}
-            <Row label="Số tầng">{item.floor}</Row>
-            <Row label="Diện tích sàn (m²)">{item.square}</Row>
-            <Row label="Ngày tham gia PYMID">
-              {formatDateTime(item.created_at)} (
-              {yearsSince(item.created_at)} năm)
-            </Row>
-            {item.license && (
-              <Row label="Giấy phép PYMID">{item.license}</Row>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function NhaSanXuatCard({ item }: { item: NhaSanXuatItem }) {
-  const images = [...(item.image || []), ...(item.avatar || [])];
-
-  return (
-    <div className="bg-white border border-gray-100 rounded-sm overflow-hidden hover:shadow-sm transition-shadow">
-      <div className="flex flex-col md:flex-row">
-        <div className="md:w-[300px] shrink-0 p-5">
-          <Gallery images={images} alt={item.name} />
-        </div>
-
-        <div className="flex-1 p-5 md:pl-0">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <Factory className="h-5 w-5 text-red-600" />
-                <h3 className="font-semibold text-gray-900">
-                  {item.name}
-                </h3>
-              </div>
-              {item.nha_san_xuat_phan_cap && (
-                <span
-                  className="text-xs font-medium px-2 py-0.5 rounded-full border"
-                  style={{
-                    borderColor:
-                      item.nha_san_xuat_phan_cap.color,
-                    color: item.nha_san_xuat_phan_cap.color,
-                  }}
-                >
-                  {item.nha_san_xuat_phan_cap.title}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-3">
-              {item.is_demo && (
-                <Badge variant="secondary" className="text-xs">Demo</Badge>
-              )}
-              <DetailLink href={`/nsx/${item.id}`} />
-            </div>
-          </div>
-
-          <Separator className="mb-3" />
-
-          <div>
-            <Row label="Đơn vị sản xuất">
-              <Link
-                href={`/nsx/${item.id}`}
-                className="text-red-600 font-medium hover:underline"
-              >
-                {item.code || item.name}
-              </Link>
-            </Row>
-            {item.nha_san_xuat_phan_cap && (
-              <Row label="Phân cấp sản xuất">
-                <span className="font-semibold" style={{ color: item.nha_san_xuat_phan_cap.color }}>
-                  {item.nha_san_xuat_phan_cap.title}
-                </span>
-              </Row>
-            )}
-            {item.phoneNumber && (
-              <Row label="Hotline">{item.phoneNumber}</Row>
-            )}
-            <Row label="Diện tích sản (m²)">
-              {item.square || "—"}
-            </Row>
-            <Row label="Công suất SX hằng năm">
-              {item.capacity || "—"}
-            </Row>
-            {item.email && (
-              <Row label="Email">
-                <a
-                  href={`mailto:${item.email}`}
-                  className="text-red-600 hover:underline"
-                >
-                  {item.email}
-                </a>
-              </Row>
-            )}
-            <Row label="Ngày tham gia PYMID">
-              {formatDateTime(item.created_at)} (
-              {yearsSince(item.created_at)} năm)
-            </Row>
-            {item.license && (
-              <Row label="Giấy phép PYMID">{item.license}</Row>
-            )}
-            {item.webpage && (
-              <Row label="Website">
-                <ExtLink href={item.webpage} />
-              </Row>
-            )}
-            {item.facebook && (
-              <Row label="Facebook">
-                <ExtLink href={item.facebook} />
-              </Row>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PartyCard({ item }: { item: PartyItem }) {
-  const images = item.image || [];
-
-  return (
-    <div className="bg-white border border-gray-100 rounded-sm overflow-hidden hover:shadow-sm transition-shadow">
-      <div className="flex flex-col md:flex-row">
-        <div className="md:w-[300px] shrink-0 p-5">
-          <Gallery images={images} alt={item.name} />
-        </div>
-
-        <div className="flex-1 p-5 md:pl-0">
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Store className="h-5 w-5 text-red-600" />
-              <h3 className="font-semibold text-gray-900">
-                {item.name}
-              </h3>
-            </div>
-            <DetailLink href={`/p/${item.id}`} />
-          </div>
-
-          <Separator className="mb-3" />
-
-          <div>
-            <Row label="Tên nhà phân phối">
-              <Link
-                href={`/p/${item.id}`}
-                className="text-red-600 font-medium hover:underline"
-              >
-                {item.name}
-              </Link>
-            </Row>
-            {item.short_description && (
-              <Row label="Mô tả">
-                <span className="line-clamp-3 leading-relaxed">
-                  {item.short_description}
-                </span>
-              </Row>
-            )}
-            {item.location?.address && (
-              <Row label="Địa chỉ">
-                <span className="text-red-600">
-                  {item.location.address}
-                </span>
-                {item.location.lat && item.location.long && (
-                  <span className="text-gray-400 text-xs ml-1">
-                    - {item.location.lat.toFixed(7)},
-                    {item.location.long.toFixed(7)}
-                  </span>
-                )}
-              </Row>
-            )}
-            {item.phoneNumber && (
-              <Row label="Hotline">{item.phoneNumber}</Row>
-            )}
-            {item.email && (
-              <Row label="Email">
-                <a
-                  href={`mailto:${item.email}`}
-                  className="text-red-600 hover:underline"
-                >
-                  {item.email}
-                </a>
-              </Row>
-            )}
-            {item.license && (
-              <Row label="Giấy phép PYMID">{item.license}</Row>
-            )}
-            {item.webpage && (
-              <Row label="Website">
-                <ExtLink href={item.webpage} />
-              </Row>
-            )}
-            {item.facebook && (
-              <Row label="Facebook">
-                <ExtLink href={item.facebook} />
-              </Row>
-            )}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

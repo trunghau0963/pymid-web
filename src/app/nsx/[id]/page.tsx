@@ -18,6 +18,8 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { ProfileHeader } from "@/components/profile-header";
 import {
   Factory,
   MapPin,
@@ -133,13 +135,9 @@ export default async function NhaSanXuatPage({ params }: Props) {
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       {/* Breadcrumb */}
-      <nav className="text-sm text-muted-foreground mb-6">
-        <Link href="/" className="hover:text-foreground">
-          Trang chủ
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-foreground">{data.name}</span>
-      </nav>
+      <div className="mb-6">
+        <Breadcrumb items={[{ label: "Trang chủ", href: "/" }, { label: data.name }]} />
+      </div>
 
       {/* Banner */}
       {data.banner && (
@@ -183,8 +181,8 @@ export default async function NhaSanXuatPage({ params }: Props) {
         <Card className="rounded-xs">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2 mb-1">
-              <Factory className="h-5 w-5 text-amber-600" />
-              <CardTitle className="text-xl text-amber-700">
+              <Factory className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl text-primary">
                 {data.name}
               </CardTitle>
             </div>

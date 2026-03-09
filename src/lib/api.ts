@@ -202,6 +202,7 @@ export interface UserBasic {
 
 export interface BioInfo {
   id: number;
+  email: string;
   phoneNumber: string;
   address: string;
   fullname: string;
