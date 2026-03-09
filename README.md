@@ -60,6 +60,12 @@
 |---|---|
 | ![Nhóm tổ yến - Desktop](capture/nhom-to-yen-detail-desktop.png) | ![Nhóm tổ yến - Mobile](capture/nhom-to-yen-detail-mobile.png) |
 
+### Hồ sơ người dùng (`/u/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![Hồ sơ người dùng - Desktop](capture/user-profile-desktop.png) | ![Hồ sơ người dùng - Mobile](capture/user-profile-mobile.png) |
+
 ## 📁 Cấu trúc dự án
 
 ```

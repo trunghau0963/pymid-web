@@ -16,6 +16,7 @@ const pages = [
   { path: "/p/1", name: "nha-phan-phoi-detail", label: "Chi tiết Nhà phân phối" },
   { path: "/s/1", name: "cua-hang-detail", label: "Chi tiết Cửa hàng" },
   { path: "/n/55", name: "nhom-to-yen-detail", label: "Chi tiết Nhóm tổ yến (Truy xuất nguồn gốc)" },
+  { path: "/u/1", name: "user-profile", label: "Hồ sơ người dùng" },
 ];
 
 async function main() {
