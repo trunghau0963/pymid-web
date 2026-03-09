@@ -1,19 +1,19 @@
-# 🏠 Pymid Web — Hệ thống Truy xuất nguồn gốc Tổ Yến
+# Pymid Web — Bird's Nest Traceability System
 
-> Nền tảng web minh bạch hóa chuỗi cung ứng ngành tổ yến Việt Nam — từ **Nhà yến** → **Nhà sản xuất** → **Nhà phân phối** → **Cửa hàng** → **Người tiêu dùng**.
+> A web platform that brings transparency to Vietnam's bird's nest supply chain — from **Bird Nest House** → **Manufacturer** → **Distributor** → **Shop** → **Consumer**.
 
-## ✨ Tính năng
+## Features
 
-- 🔍 **Truy xuất nguồn gốc** — Nhập mã nhóm tổ yến để xem toàn bộ hành trình sản phẩm
-- 🏡 **Nhà yến** — Xem thông tin chi tiết, nhật ký thu hoạch, môi trường, chủ sở hữu
-- 🏭 **Nhà sản xuất** — Sản phẩm, giấy phép, quy trình sản xuất
-- 🏢 **Nhà phân phối** — Hệ thống cửa hàng, đội ngũ nhân viên
-- 🛒 **Cửa hàng** — Vị trí, sản phẩm đang bán, liên hệ
-- 👤 **Hồ sơ người dùng** — Quản lý nhà yến, nhà sản xuất, nhà phân phối
+- **Traceability** — Enter a batch code to view the full product journey
+- **Bird Nest House** — Detailed info, harvest diary, environment monitoring, owner
+- **Manufacturer** — Products, licenses, production process
+- **Distributor** — Shop network, team members
+- **Shop** — Location, products for sale, contact info
+- **User Profile** — Manage bird nest houses, manufacturers, distributors
 
-## 🛠️ Công nghệ
+## Tech Stack
 
-| Lớp | Công nghệ |
+| Layer | Technology |
 |---|---|
 | Framework | **Next.js 16** (App Router, Turbopack) |
 | UI | **Tailwind CSS v4** + **shadcn/ui** |
@@ -22,64 +22,86 @@
 | Font | **Inter** (Google Fonts, Vietnamese subset) |
 | API | REST API — `api.pymid.com` |
 
-## 📸 Screenshots
+## Screenshots
 
-### Trang chủ
-
-| Desktop | Mobile |
-|---|---|
-| ![Trang chủ - Desktop](capture/home-desktop.png) | ![Trang chủ - Mobile](capture/home-mobile.png) |
-
-### Chi tiết Nhà yến (`/ny/[id]`)
+### Home Page
 
 | Desktop | Mobile |
 |---|---|
-| ![Nhà yến - Desktop](capture/nha-yen-detail-desktop.png) | ![Nhà yến - Mobile](capture/nha-yen-detail-mobile.png) |
+| ![Home - Desktop](capture/home-desktop.png) | ![Home - Mobile](capture/home-mobile.png) |
 
-### Chi tiết Nhà sản xuất (`/nsx/[id]`)
-
-| Desktop | Mobile |
-|---|---|
-| ![Nhà sản xuất - Desktop](capture/nha-san-xuat-detail-desktop.png) | ![Nhà sản xuất - Mobile](capture/nha-san-xuat-detail-mobile.png) |
-
-### Chi tiết Nhà phân phối (`/p/[id]`)
+### Bird Nest House Detail (`/ny/[id]`)
 
 | Desktop | Mobile |
 |---|---|
-| ![Nhà phân phối - Desktop](capture/nha-phan-phoi-detail-desktop.png) | ![Nhà phân phối - Mobile](capture/nha-phan-phoi-detail-mobile.png) |
+| ![Bird Nest House - Desktop](capture/nha-yen-detail-desktop.png) | ![Bird Nest House - Mobile](capture/nha-yen-detail-mobile.png) |
 
-### Chi tiết Cửa hàng (`/s/[id]`)
+**Tab views:**
 
-| Desktop | Mobile |
-|---|---|
-| ![Cửa hàng - Desktop](capture/cua-hang-detail-desktop.png) | ![Cửa hàng - Mobile](capture/cua-hang-detail-mobile.png) |
+| Info | Sold Batches | Diary |
+|---|---|---|
+| ![Info](capture/nha-yen-tab-info-desktop.png) | ![Sold](capture/nha-yen-tab-sold-desktop.png) | ![Diary](capture/nha-yen-tab-diary-desktop.png) |
 
-### Truy xuất nguồn gốc — Nhóm tổ yến (`/n/[id]`)
+| Devices | Owner | Harvest Process |
+|---|---|---|
+| ![Devices](capture/nha-yen-tab-environment-desktop.png) | ![Owner](capture/nha-yen-tab-owner-desktop.png) | ![Harvest](capture/nha-yen-tab-harvest-desktop.png) |
 
-| Desktop | Mobile |
-|---|---|
-| ![Nhóm tổ yến - Desktop](capture/nhom-to-yen-detail-desktop.png) | ![Nhóm tổ yến - Mobile](capture/nhom-to-yen-detail-mobile.png) |
-
-### Hồ sơ người dùng (`/u/[id]`)
+### Manufacturer Detail (`/nsx/[id]`)
 
 | Desktop | Mobile |
 |---|---|
-| ![Hồ sơ người dùng - Desktop](capture/user-profile-desktop.png) | ![Hồ sơ người dùng - Mobile](capture/user-profile-mobile.png) |
+| ![Manufacturer - Desktop](capture/nha-san-xuat-detail-desktop.png) | ![Manufacturer - Mobile](capture/nha-san-xuat-detail-mobile.png) |
 
-## 📁 Cấu trúc dự án
+### Distributor Detail (`/p/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![Distributor - Desktop](capture/nha-phan-phoi-detail-desktop.png) | ![Distributor - Mobile](capture/nha-phan-phoi-detail-mobile.png) |
+
+### Shop Detail (`/s/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![Shop - Desktop](capture/cua-hang-detail-desktop.png) | ![Shop - Mobile](capture/cua-hang-detail-mobile.png) |
+
+**Tab views:**
+
+| Info | Distributor |
+|---|---|
+| ![Info](capture/shop-tab-info-desktop.png) | ![Distributor](capture/shop-tab-party-desktop.png) |
+
+### Traceability — Batch Detail (`/n/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![Batch - Desktop](capture/nhom-to-yen-detail-desktop.png) | ![Batch - Mobile](capture/nhom-to-yen-detail-mobile.png) |
+
+### User Profile (`/u/[id]`)
+
+| Desktop | Mobile |
+|---|---|
+| ![User - Desktop](capture/user-profile-desktop.png) | ![User - Mobile](capture/user-profile-mobile.png) |
+
+**Tab views:**
+
+| Profile | Bird Nest Houses |
+|---|---|
+| ![Profile](capture/user-tab-profile-desktop.png) | ![Bird Nest Houses](capture/user-tab-nha-yen-desktop.png) |
+
+## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── page.tsx              # Trang chủ
+│   ├── page.tsx              # Home page
 │   ├── layout.tsx            # Root layout
 │   ├── globals.css           # Theme & global styles
-│   ├── n/[id]/page.tsx       # Chi tiết Nhóm tổ yến (truy xuất)
-│   ├── ny/[id]/page.tsx      # Chi tiết Nhà yến
-│   ├── nsx/[id]/page.tsx     # Chi tiết Nhà sản xuất
-│   ├── p/[id]/page.tsx       # Chi tiết Nhà phân phối
-│   ├── s/[id]/page.tsx       # Chi tiết Cửa hàng
-│   └── u/[id]/page.tsx       # Hồ sơ người dùng
+│   ├── n/[id]/page.tsx       # Batch traceability detail
+│   ├── ny/[id]/page.tsx      # Bird nest house detail
+│   ├── nsx/[id]/page.tsx     # Manufacturer detail
+│   ├── p/[id]/page.tsx       # Distributor detail
+│   ├── s/[id]/page.tsx       # Shop detail
+│   └── u/[id]/page.tsx       # User profile
 ├── components/               # Shared components
 │   ├── header.tsx
 │   ├── footer.tsx
@@ -92,21 +114,21 @@ src/
     └── utils.ts              # Utilities
 ```
 
-## 🚀 Bắt đầu
+## Getting Started
 
 ```bash
-# Cài đặt dependencies
+# Install dependencies
 npm install
 
-# Chạy dev server
+# Run dev server
 npm run dev
 
-# Build production
+# Build for production
 npm run build
 ```
 
-Mở [http://localhost:3000](http://localhost:3000) để xem kết quả.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-## 📄 License
+## License
 
 MIT
