@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -40,6 +41,11 @@ function ImageLightbox({
   onClose: () => void;
 }) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const goNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -65,7 +71,7 @@ function ImageLightbox({
 
   const currentImage = images[currentIndex];
 
-  return (
+  const content = (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div
@@ -137,6 +143,10 @@ function ImageLightbox({
       )}
     </div>
   );
+
+  // Use portal to render at body level, avoiding transform containment issues
+  if (!mounted) return null;
+  return createPortal(content, document.body);
 }
 
 /* ──────────────────────────────

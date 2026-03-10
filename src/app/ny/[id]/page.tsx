@@ -34,6 +34,8 @@ import {
 } from "lucide-react";
 import { NhomToYenFilter } from "./nhom-to-yen-filter";
 import { NhatKyFilter } from "./nhat-ky-filter";
+import { RichText } from "@/components/rich-text";
+import { ImageGalleryLightbox } from "@/components/image-gallery-lightbox";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -272,22 +274,7 @@ export default async function NhaYenPage({ params }: Props) {
                   <CardTitle className="text-lg">Hình Ảnh Nhà Yến</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {data.image.map((img) => (
-                      <div
-                        key={img.id}
-                        className="rounded-xl overflow-hidden aspect-square"
-                      >
-                        <img
-                          src={getImageUrl(
-                            img.formats?.medium?.url || img.url
-                          )}
-                          alt={img.alternativeText || data.name}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform"
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  <ImageGalleryLightbox images={data.image} columns={4} />
                 </CardContent>
               </Card>
             )}
@@ -397,19 +384,7 @@ export default async function NhaYenPage({ params }: Props) {
             </CardHeader>
             <CardContent>
               {data.scale_description ? (
-                <div
-                  className="prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{
-                    __html: data.scale_description
-                      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
-                        const imgUrl = src.startsWith("http")
-                          ? src
-                          : `https://api.pymid.com${src}`;
-                        return `<img src="${imgUrl}" alt="${alt}" class="rounded-xl max-w-full" />`;
-                      })
-                      .replace(/\n/g, "<br/>"),
-                  }}
-                />
+                <RichText content={data.scale_description} />
               ) : (
                 <p className="text-muted-foreground text-center py-8">
                   Chưa có thông tin thiết bị đo lường
@@ -498,23 +473,7 @@ export default async function NhaYenPage({ params }: Props) {
             </CardHeader>
             <CardContent>
               {data.flow_description ? (
-                <div
-                  className="prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{
-                    __html: data.flow_description
-                      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
-                        const imgUrl = src.startsWith("http")
-                          ? src
-                          : `https://api.pymid.com${src}`;
-                        return `<img src="${imgUrl}" alt="${alt}" class="rounded-xl max-w-full" />`;
-                      })
-                      .replace(
-                        /<iframe([^>]*)><\/iframe>/g,
-                        '<div class="aspect-video rounded-xl overflow-hidden"><iframe$1 class="w-full h-full"></iframe></div>'
-                      )
-                      .replace(/\n/g, "<br/>"),
-                  }}
-                />
+                <RichText content={data.flow_description} />
               ) : (
                 <p className="text-muted-foreground text-center py-8">
                   Chưa có thông tin quy trình hái tổ

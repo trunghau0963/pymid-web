@@ -33,6 +33,7 @@ import {
   Award,
   Clock,
 } from "lucide-react";
+import { RichText } from "@/components/rich-text";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -151,14 +152,7 @@ export default async function TraceabilityPage({ params }: Props) {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div
-                  className="prose prose-sm max-w-none text-muted-foreground"
-                  dangerouslySetInnerHTML={{
-                    __html: data.description
-                      .replace(/\n/g, "<br/>")
-                      .replace(/<BR>/g, "<br/>"),
-                  }}
-                />
+                <RichText content={data.description} />
               </CardContent>
             </Card>
           )}

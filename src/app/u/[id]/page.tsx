@@ -157,23 +157,25 @@ export default async function UserProfilePage({
       {/* Tabs - Modern Design with Light Gradient */}
       <div className="max-w-6xl mx-auto px-6 py-6">
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="inline-flex h-14 p-1.5 bg-muted/40 rounded-2xl justify-start gap-1.5 overflow-x-auto shadow-lg shadow-primary/[0.04] border border-border/40">
-            <Tab value="profile" icon={<User className="h-4 w-4" />} label="Đại diện" />
-            {hasNhaYen && (
-              <Tab value="nha-yen" icon={<Home className="h-4 w-4" />} label="Nhà yến" count={totals.nhaYen} />
-            )}
-            {hasNhaSanXuat && (
-              <Tab value="nha-san-xuat" icon={<Factory className="h-4 w-4" />} label="Nhà sản xuất" count={totals.nhaSanXuat} />
-            )}
-            {hasParties && (
-              <Tab value="nha-phan-phoi" icon={<Store className="h-4 w-4" />} label="Nhà phân phối" count={totals.party} />
-            )}
-          </TabsList>
+          <div className="overflow-x-auto -mx-6 px-6">
+            <TabsList className="w-full h-16 p-2 bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 rounded-2xl justify-start gap-2 shadow-lg shadow-slate-200/50 border border-slate-200/50">
+              <Tab value="profile" icon={<User className="h-4 w-4" />} label="Đại diện" />
+              {hasNhaYen && (
+                <Tab value="nha-yen" icon={<Home className="h-4 w-4" />} label="Nhà yến" count={totals.nhaYen} />
+              )}
+              {hasNhaSanXuat && (
+                <Tab value="nha-san-xuat" icon={<Factory className="h-4 w-4" />} label="Nhà sản xuất" count={totals.nhaSanXuat} />
+              )}
+              {hasParties && (
+                <Tab value="nha-phan-phoi" icon={<Store className="h-4 w-4" />} label="Nhà phân phối" count={totals.party} />
+              )}
+            </TabsList>
+          </div>
 
           {/* ───── Profile Tab ───── */}
           <TabsContent value="profile" className="pt-10">
             <div className="grid md:grid-cols-2 gap-8">
-              {/* Contact Card */}
+              {/* Personal Info Card */}
               <div className="group relative">
                 {/* Card glow effect */}
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 via-blue-500/20 to-primary/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
@@ -188,50 +190,13 @@ export default async function UserProfilePage({
                         <User className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-foreground">Thông tin liên hệ</h3>
-                        <p className="text-xs text-muted-foreground">Các thông tin cá nhân</p>
+                        <h3 className="text-lg font-bold text-slate-800">Thông tin cá nhân</h3>
+                        <p className="text-xs text-slate-400">Thông tin đại diện</p>
                       </div>
                     </div>
                     
                     <dl className="space-y-4">
                       <DL label="Họ và tên" value={fullname} />
-                      {user.bio?.address && (
-                        <DL label="Địa chỉ" value={user.bio.address} />
-                      )}
-                      {user.bio?.phoneNumber && (
-                        <DL label="Số điện thoại" value={user.bio.phoneNumber} isPhone />
-                      )}
-                      {user.email && (
-                        <DL label="Email" value={user.email} isLink />
-                      )}
-                    </dl>
-                  </div>
-                </section>
-              </div>
-
-              {/* Membership Card - Glassmorphism */}
-              <div className="group relative">
-                {/* Card glow effect */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500/20 via-primary/20 to-amber-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
-                
-                <section className="relative h-full rounded-2xl bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-border/40 overflow-hidden">
-                  {/* Top accent bar */}
-                  <div className="h-1.5 bg-gradient-to-r from-amber-400 via-primary to-amber-400" />
-                  
-                  <div className="p-8">
-                    <div className="flex items-center gap-4 mb-8">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-primary flex items-center justify-center shadow-lg shadow-amber-500/30">
-                        <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-foreground">Thành viên PYMID</h3>
-                        <p className="text-xs text-muted-foreground">Thông tin thành viên</p>
-                      </div>
-                    </div>
-                    
-                    <dl className="space-y-4">
                       {user.who_am_i && (
                         <DL label="Vai trò" value={user.who_am_i} />
                       )}
@@ -244,6 +209,41 @@ export default async function UserProfilePage({
                       />
                       {user.show_vip && (
                         <DL label="Hạng" value="VIP" highlight />
+                      )}
+                    </dl>
+                  </div>
+                </section>
+              </div>
+
+              {/* Contact Card */}
+              <div className="group relative">
+                {/* Card glow effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500/20 via-primary/20 to-amber-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
+                
+                <section className="relative h-full rounded-2xl bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-border/40 overflow-hidden">
+                  {/* Top accent bar */}
+                  <div className="h-1.5 bg-gradient-to-r from-amber-400 via-primary to-amber-400" />
+                  
+                  <div className="p-8">
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className="w-12 h-12 rounded-sm bg-gradient-to-br from-amber-400 to-primary flex items-center justify-center shadow-lg shadow-amber-500/30">
+                        <Phone className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-slate-800">Liên hệ</h3>
+                        <p className="text-xs text-slate-400">Thông tin liên lạc</p>
+                      </div>
+                    </div>
+                    
+                    <dl className="space-y-4">
+                      {user.bio?.phoneNumber && (
+                        <DL label="Số điện thoại" value={user.bio.phoneNumber} isPhone />
+                      )}
+                      {user.email && (
+                        <DL label="Email" value={user.email} isLink />
+                      )}
+                      {user.bio?.address && (
+                        <DL label="Địa chỉ" value={user.bio.address} />
                       )}
                     </dl>
                   </div>

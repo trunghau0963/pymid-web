@@ -36,6 +36,8 @@ import {
   FileText,
   Camera,
 } from "lucide-react";
+import { RichText } from "@/components/rich-text";
+import { ImageGalleryLightbox } from "@/components/image-gallery-lightbox";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -267,9 +269,21 @@ export default async function NhaSanXuatPage({ params }: Props) {
         </Card>
       )}
 
+      {/* Gallery - Below Owner */}
+      {data.image && data.image.length > 1 && (
+        <Card className="mb-8 rounded-xs">
+          <CardHeader>
+            <CardTitle>Hình ảnh nhà sản xuất</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ImageGalleryLightbox images={data.image} columns={4} />
+          </CardContent>
+        </Card>
+      )}
+
       {/* Tabs */}
       <Tabs defaultValue="info" className="space-y-6">
-        <TabsList className="flex flex-wrap h-auto gap-1.5 bg-muted/40 p-1.5 rounded-2xl border border-border/40">
+        <TabsList className="w-full flex flex-wrap h-auto gap-1 bg-muted/50 p-1 rounded-xs">
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
@@ -292,10 +306,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
             </CardHeader>
             <CardContent>
               {data.description ? (
-                <div
-                  className="prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: data.description }}
-                />
+                <RichText content={data.description} />
               ) : (
                 <p className="text-muted-foreground">Chưa có thông tin</p>
               )}
@@ -476,10 +487,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div
-                  className="prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: data.flow_description }}
-                />
+                <RichText content={data.flow_description} />
               </CardContent>
             </Card>
           </TabsContent>
@@ -496,10 +504,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div
-                  className="prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: data.license_description }}
-                />
+                <RichText content={data.license_description} />
               </CardContent>
             </Card>
           </TabsContent>
@@ -516,37 +521,12 @@ export default async function NhaSanXuatPage({ params }: Props) {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div
-                  className="prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: data.cam_description }}
-                />
+                <RichText content={data.cam_description} />
               </CardContent>
             </Card>
           </TabsContent>
         )}
       </Tabs>
-
-      {/* Gallery */}
-      {data.image && data.image.length > 1 && (
-        <Card className="mt-8 rounded-xl">
-          <CardHeader>
-            <CardTitle>Hình ảnh nhà sản xuất</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {data.image.map((img) => (
-                <div key={img.id} className="rounded-xl overflow-hidden">
-                  <img
-                    src={getImageUrl(img.url)}
-                    alt={img.alternativeText || data.name}
-                    className="w-full h-32 object-cover hover:scale-105 transition-transform"
-                  />
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }

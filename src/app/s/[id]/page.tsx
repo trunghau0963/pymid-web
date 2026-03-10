@@ -33,6 +33,8 @@ import {
   FileText,
   Facebook,
 } from "lucide-react";
+import { RichText } from "@/components/rich-text";
+import { ImageGalleryLightbox } from "@/components/image-gallery-lightbox";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -228,7 +230,7 @@ export default async function ShopPage({ params }: Props) {
 
       {/* Tabs */}
       <Tabs defaultValue="info" className="space-y-6">
-        <TabsList className="flex flex-wrap h-auto gap-1.5 bg-muted/40 p-1.5 rounded-2xl border border-border/40">
+        <TabsList className="w-full flex flex-wrap h-auto gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
@@ -251,10 +253,7 @@ export default async function ShopPage({ params }: Props) {
             </CardHeader>
             <CardContent>
               {data.description ? (
-                <div
-                  className="prose prose-sm max-w-none text-foreground/80"
-                  dangerouslySetInnerHTML={{ __html: data.description }}
-                />
+                <RichText content={data.description} />
               ) : (
                 <p className="text-muted-foreground">Chưa có thông tin</p>
               )}
@@ -416,17 +415,7 @@ export default async function ShopPage({ params }: Props) {
             <CardTitle>Hình ảnh cửa hàng</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {data.image.map((img) => (
-                <div key={img.id} className="rounded-2xl overflow-hidden">
-                  <img
-                    src={getImageUrl(img.url)}
-                    alt={img.alternativeText || data.name}
-                    className="w-full h-32 object-cover hover:scale-105 transition-transform"
-                  />
-                </div>
-              ))}
-            </div>
+            <ImageGalleryLightbox images={data.image} columns={4} />
           </CardContent>
         </Card>
       )}
@@ -441,7 +430,13 @@ export default async function ShopPage({ params }: Props) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="rounded-2xl overflow-hidden">
+            {data.location.address && (
+              <p className="text-sm text-slate-600 mb-3 flex items-center gap-1.5">
+                <MapPin className="h-4 w-4 text-primary shrink-0" />
+                {data.location.address}
+              </p>
+            )}
+            <div className="rounded-lg overflow-hidden">
               <iframe
                 src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1000!2d${data.location.long}!3d${data.location.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDQ5JzUwLjMiTiAxMDbCsDQyJzQyLjAiRQ!5e0!3m2!1svi!2svn!4v1234567890!5m2!1svi!2svn`}
                 className="w-full h-64"
@@ -450,11 +445,6 @@ export default async function ShopPage({ params }: Props) {
                 title="Map"
               />
             </div>
-            {data.location.address && (
-              <p className="text-sm text-muted-foreground mt-3">
-                {data.location.address}
-              </p>
-            )}
           </CardContent>
         </Card>
       )}

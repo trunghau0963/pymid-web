@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
-const inter = Inter({
-  variable: "--font-inter",
+const beVietnamPro = Be_Vietnam_Pro({
+  variable: "--font-sans",
   subsets: ["latin", "vietnamese"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${inter.variable} font-sans antialiased bg-background`}>
+      <body className={`${beVietnamPro.variable} font-sans antialiased bg-background`}>
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
