@@ -140,7 +140,7 @@ export default async function PartyPage({ params }: Props) {
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         {/* YouTube / Image */}
-        <div className="rounded-2xl overflow-hidden bg-muted/50">
+        <div className="rounded-md overflow-hidden bg-muted/50">
           {youtubeEmbed ? (
             <div className="aspect-video">
               <iframe
@@ -165,7 +165,7 @@ export default async function PartyPage({ params }: Props) {
         </div>
 
         {/* Info Card */}
-        <Card className="rounded-2xl border-border/60">
+        <Card className="rounded-md border-border/60">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2 mb-1">
               <Building2 className="h-5 w-5 text-primary" />
@@ -179,7 +179,7 @@ export default async function PartyPage({ params }: Props) {
               </p>
             )}
             {data.code && (
-              <Badge variant="outline" className="w-fit mt-2 rounded-xl">
+              <Badge variant="outline" className="w-fit mt-2 rounded-sm">
                 Mã: {data.code}
               </Badge>
             )}
@@ -219,7 +219,7 @@ export default async function PartyPage({ params }: Props) {
 
       {/* Owner Info */}
       {data.owner && (
-        <Card className="mb-8 rounded-2xl border-border/60">
+        <Card className="mb-8 rounded-md border-border/60">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
               <User className="h-5 w-5 text-primary" />
@@ -229,7 +229,7 @@ export default async function PartyPage({ params }: Props) {
           <CardContent>
             <Link
               href={`/u/${data.owner.id}`}
-              className="flex items-center gap-4 hover:bg-muted/60 p-3 rounded-xl transition-colors"
+              className="flex items-center gap-4 hover:bg-muted/60 p-3 rounded-sm transition-colors"
             >
               <Avatar className="h-12 w-12">
                 {data.owner.avatar ? (
@@ -261,12 +261,14 @@ export default async function PartyPage({ params }: Props) {
 
       {/* Tabs */}
       <Tabs defaultValue="info" className="space-y-6">
-        <TabsList className="w-full flex flex-wrap h-auto gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
+        <TabsList className="w-full flex flex-wrap h-auto min-h-14 gap-2 p-2 bg-gradient-to-r from-emerald-50/80 via-slate-50 to-emerald-50/80 rounded-md shadow-md shadow-emerald-100/50 border border-emerald-100/50">
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.id}
               value={tab.id}
-              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200"
+              className="px-4 py-2.5 rounded-sm bg-transparent text-slate-600 font-medium transition-all duration-300 ease-out
+                hover:text-primary hover:bg-white/80
+                data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:shadow-primary/15"
             >
               {tab.label}
             </TabsTrigger>
@@ -275,7 +277,7 @@ export default async function PartyPage({ params }: Props) {
 
         {/* Info Tab */}
         <TabsContent value="info">
-          <Card className="rounded-2xl border-border/60">
+          <Card className="rounded-md border-border/60">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5 text-primary" />
@@ -302,7 +304,7 @@ export default async function PartyPage({ params }: Props) {
         {/* Team Tab */}
         {kyThuats.length > 0 && (
           <TabsContent value="team">
-            <Card className="rounded-2xl border-border/60">
+            <Card className="rounded-md border-border/60">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Users className="h-5 w-5 text-primary" />
@@ -313,7 +315,7 @@ export default async function PartyPage({ params }: Props) {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {kyThuats.map((user) => (
                     <Link key={user.id} href={`/u/${user.id}`}>
-                      <Card className="rounded-2xl hover:shadow-md transition-shadow border-border/60">
+                      <Card className="rounded-md hover:shadow-md transition-shadow border-border/60">
                         <CardContent className="p-4 flex items-center gap-4">
                           <Avatar className="h-12 w-12">
                             {user.avatar ? (
@@ -351,7 +353,7 @@ export default async function PartyPage({ params }: Props) {
 
       {/* Map */}
       {data.location?.lat && data.location?.long && (
-        <Card className="mt-8 rounded-2xl border-border/60">
+        <Card className="mt-8 rounded-md border-border/60">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <MapPin className="h-5 w-5 text-primary" />

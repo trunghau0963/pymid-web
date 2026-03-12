@@ -67,7 +67,7 @@ function Lightbox({
         />
       </div>
       {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 p-2 rounded-xl bg-black/50 backdrop-blur-sm max-w-[90vw] overflow-x-auto">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 p-2 rounded-sm bg-black/50 backdrop-blur-sm max-w-[90vw] overflow-x-auto">
           {images.map((img, i) => (
             <button
               key={i}

@@ -15,7 +15,7 @@ export function ContentSlider({
   className = '',
 }: ContentSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(autoPlayInterval > 0);
   const totalSlides = children.length;
 
   const goToNext = useCallback(() => {
@@ -32,7 +32,7 @@ export function ContentSlider({
 
   // Auto-play
   useEffect(() => {
-    if (!isPlaying || totalSlides <= 1) return;
+    if (!isPlaying || totalSlides <= 1 || autoPlayInterval <= 0) return;
 
     const interval = setInterval(goToNext, autoPlayInterval);
     return () => clearInterval(interval);
@@ -108,23 +108,25 @@ export function ContentSlider({
 
         {/* Right: Navigation controls */}
         <div className="flex items-center gap-2">
-          {/* Play/Pause */}
-          <button
-            onClick={() => setIsPlaying((p) => !p)}
-            className={`p-2 rounded-full border transition-all duration-200 ${
-              isPlaying
-                ? 'bg-primary text-white border-primary hover:bg-primary/90 shadow-sm shadow-primary/20'
-                : 'bg-card text-muted-foreground border-border/60 hover:border-border hover:bg-muted/40'
-            }`}
-            aria-label={isPlaying ? 'Pause auto-play' : 'Start auto-play'}
-            title={isPlaying ? 'Dừng tự động (Space)' : 'Tự động chuyển (Space)'}
-          >
-            {isPlaying ? (
-              <Pause className="h-4 w-4" />
-            ) : (
-              <Play className="h-4 w-4" />
-            )}
-          </button>
+          {/* Play/Pause - only show when autoplay is enabled */}
+          {autoPlayInterval > 0 && (
+            <button
+              onClick={() => setIsPlaying((p) => !p)}
+              className={`p-2 rounded-full border transition-all duration-200 ${
+                isPlaying
+                  ? 'bg-primary text-white border-primary hover:bg-primary/90 shadow-sm shadow-primary/20'
+                  : 'bg-card text-muted-foreground border-border/60 hover:border-border hover:bg-muted/40'
+              }`}
+              aria-label={isPlaying ? 'Pause auto-play' : 'Start auto-play'}
+              title={isPlaying ? 'Dừng tự động (Space)' : 'Tự động chuyển (Space)'}
+            >
+              {isPlaying ? (
+                <Pause className="h-4 w-4" />
+              ) : (
+                <Play className="h-4 w-4" />
+              )}
+            </button>
+          )}
 
           {/* Prev */}
           <button

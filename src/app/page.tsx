@@ -42,8 +42,8 @@ export default function Home() {
             { icon: Lock, title: "Quy Trình Khép Kín", desc: "Kiểm soát toàn bộ nguồn gốc và chống trà trộn tổ yến từ bên ngoài. Bảo vệ chất lượng sản phẩm.", delay: 0.1 },
             { icon: CheckCircle, title: "Mua Yến An Toàn", desc: "Tra cứu thông tin rõ ràng – minh bạch từ nhà yến tới khâu sản xuất. Mua hàng với niềm tin.", delay: 0.2 },
           ].map(({ icon: Icon, title, desc, delay }) => (
-            <div key={title} className="group rounded-2xl border border-border/60 bg-card p-8 hover:shadow-xl hover:shadow-primary/[0.06] hover:border-primary/20 hover:-translate-y-1 transition-all duration-300 animate-slide-in-up" style={{ animationDelay: `${delay}s` }}>
-              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/[0.08] group-hover:bg-primary/[0.14] transition-colors duration-300">
+            <div key={title} className="group rounded-md border border-border/60 bg-card p-8 hover:shadow-xl hover:shadow-primary/[0.06] hover:border-primary/20 hover:-translate-y-1 transition-all duration-300 animate-slide-in-up" style={{ animationDelay: `${delay}s` }}>
+              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-md bg-primary/[0.08] group-hover:bg-primary/[0.14] transition-colors duration-300">
                 <Icon className="h-7 w-7 text-primary" />
               </div>
               <h3 className="font-bold text-lg text-foreground mb-3 tracking-tight">

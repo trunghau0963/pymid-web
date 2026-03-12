@@ -8,7 +8,7 @@ function processContent(html: string): string {
     /!\[([^\]]*)\]\(([^)]+)\)/g,
     (_, alt: string, src: string) => {
       const imgUrl = src.startsWith("http") ? src : `${API_BASE}${src}`;
-      return `<img src="${imgUrl}" alt="${alt}" class="rounded-lg max-w-full h-auto shadow-sm" loading="lazy" />`;
+      return `<img src="${imgUrl}" alt="${alt}" class="rounded-lg max-w-full h-auto shadow-sm my-4" loading="lazy" />`;
     }
   );
 
@@ -30,10 +30,16 @@ function processContent(html: string): string {
   processed = processed.replace(/<BR>/gi, "<br/>");
   processed = processed.replace(/\n/g, "<br/>");
 
-  // Process relative image src in <img> tags
+  // Process relative image src - convert to full API URL
   processed = processed.replace(
     /src="(\/uploads\/[^"]+)"/g,
     `src="${API_BASE}$1"`
+  );
+
+  // Add centering class to all img tags
+  processed = processed.replace(
+    /<img/g,
+    '<img style="display:block;margin-left:auto;margin-right:auto"'
   );
 
   return processed;
@@ -56,7 +62,7 @@ export function RichText({
         prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg
         prose-p:text-slate-600 prose-p:leading-relaxed
         prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-        prose-img:rounded-lg prose-img:shadow-sm prose-img:my-4
+        prose-img:rounded-lg prose-img:shadow-sm prose-img:my-0 prose-img:mx-auto
         prose-strong:text-slate-800
         prose-ul:list-disc prose-ol:list-decimal
         prose-li:text-slate-600 prose-li:marker:text-primary

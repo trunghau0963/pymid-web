@@ -121,7 +121,7 @@ function ImageLightbox({
 
       {/* Thumbnail Strip */}
       {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 p-2 rounded-xl bg-black/50 backdrop-blur-sm">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 p-2 rounded-sm bg-black/50 backdrop-blur-sm">
           {images.map((img, i) => (
             <button
               key={i}
@@ -166,7 +166,7 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
   if (!images.length) {
     return (
       <div className="flex flex-col">
-        <div className={`${MAIN_IMAGE_HEIGHT} bg-gradient-to-br from-muted to-muted rounded-xl flex items-center justify-center`}>
+        <div className={`${MAIN_IMAGE_HEIGHT} bg-gradient-to-br from-muted to-muted rounded-sm flex items-center justify-center`}>
           <div className="text-center">
             <div className="w-16 h-16 mx-auto mb-3 bg-muted rounded-full flex items-center justify-center">
               <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,7 +195,7 @@ function Gallery({ images, alt }: { images: ImageItem[]; alt: string }) {
     <>
       <div className="flex flex-col">
         {/* Main Image - Fixed Height */}
-        <div className={`relative ${MAIN_IMAGE_HEIGHT} rounded-xl overflow-hidden bg-muted/60 group`}>
+        <div className={`relative ${MAIN_IMAGE_HEIGHT} rounded-sm overflow-hidden bg-muted/60 group`}>
           <img
             src={getImageUrl(activeImage.formats?.large?.url || activeImage.formats?.medium?.url || activeImage.url)}
             alt={alt}

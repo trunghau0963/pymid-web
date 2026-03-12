@@ -128,7 +128,7 @@ export function NhatKyFilter({ items }: Props) {
             <CardContent className="p-4">
               <div className="flex flex-col sm:flex-row gap-4">
                 {item.images?.[0] && (
-                  <div className="shrink-0 rounded-xl overflow-hidden w-full sm:w-32 h-32">
+                  <div className="shrink-0 rounded-sm overflow-hidden w-full sm:w-32 h-32">
                     <img
                       src={getImageUrl(
                         item.images[0].formats?.thumbnail?.url ||

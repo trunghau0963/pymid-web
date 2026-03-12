@@ -144,7 +144,7 @@ export default async function TraceabilityPage({ params }: Props) {
 
           {/* Description */}
           {data.description && (
-            <Card className="border-border/60 rounded-2xl">
+            <Card className="border-border/60 rounded-md">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <ShieldCheck className="h-5 w-5 text-primary" />
@@ -159,7 +159,7 @@ export default async function TraceabilityPage({ params }: Props) {
 
           {/* YouTube Video */}
           {youtubeEmbed && (
-            <Card className="border-border/60 rounded-2xl">
+            <Card className="border-border/60 rounded-md">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Play className="h-5 w-5 text-primary" />
@@ -181,7 +181,7 @@ export default async function TraceabilityPage({ params }: Props) {
           )}
 
           {/* Timeline Info */}
-          <Card className="border-border/60 rounded-2xl">
+          <Card className="border-border/60 rounded-md">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Clock className="h-5 w-5 text-primary" />
@@ -213,7 +213,7 @@ export default async function TraceabilityPage({ params }: Props) {
         {/* Sidebar */}
         <div className="space-y-8">
           {/* Bird Nest House Info */}
-          <Card className="border-border/60 rounded-2xl shadow-lg shadow-primary/[0.04] hover:shadow-xl hover:shadow-primary/[0.06] transition-all duration-300">
+          <Card className="border-border/60 rounded-md shadow-lg shadow-primary/[0.04] hover:shadow-xl hover:shadow-primary/[0.06] transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Home className="h-5 w-5 text-primary" />
@@ -222,7 +222,7 @@ export default async function TraceabilityPage({ params }: Props) {
             </CardHeader>
             <CardContent className="space-y-4">
               {nha_yen.image?.[0] && (
-                <div className="rounded-xl overflow-hidden">
+                <div className="rounded-sm overflow-hidden">
                   <Image
                     src={getImageUrl(nha_yen.image[0].url)}
                     alt={nha_yen.name}
@@ -288,7 +288,7 @@ export default async function TraceabilityPage({ params }: Props) {
 
               <Link
                 href={`/ny/${nha_yen.id}`}
-                className="block w-full text-center py-2.5 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-all duration-200 shadow-sm shadow-primary/20"
+                className="block w-full text-center py-2.5 px-4 bg-primary text-primary-foreground rounded-sm text-sm font-semibold hover:bg-primary/90 transition-all duration-200 shadow-sm shadow-primary/20"
               >
                 Xem chi tiết nhà yến →
               </Link>
@@ -297,7 +297,7 @@ export default async function TraceabilityPage({ params }: Props) {
 
           {/* Owner Info */}
           {owner && (
-            <Card className="border-border/60 rounded-2xl shadow-lg shadow-primary/[0.04] hover:shadow-xl hover:shadow-primary/[0.06] transition-all duration-300">
+            <Card className="border-border/60 rounded-md shadow-lg shadow-primary/[0.04] hover:shadow-xl hover:shadow-primary/[0.06] transition-all duration-300">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <User className="h-5 w-5 text-primary" />
@@ -349,7 +349,7 @@ export default async function TraceabilityPage({ params }: Props) {
 
           {/* Location */}
           {nha_yen.location && (
-            <Card className="border-border/60 rounded-2xl shadow-lg shadow-primary/[0.04] hover:shadow-xl hover:shadow-primary/[0.06] transition-all duration-300 overflow-hidden">
+            <Card className="border-border/60 rounded-md shadow-lg shadow-primary/[0.04] hover:shadow-xl hover:shadow-primary/[0.06] transition-all duration-300 overflow-hidden">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />
@@ -391,7 +391,7 @@ function MetricCard({
   value: string;
 }) {
   return (
-    <Card className="text-center border-border/60 rounded-2xl hover:shadow-lg hover:shadow-primary/[0.04] transition-all duration-300">
+    <Card className="text-center border-border/60 rounded-md hover:shadow-lg hover:shadow-primary/[0.04] transition-all duration-300">
       <CardContent className="pt-5 pb-4">
         <div className="flex justify-center mb-3">{icon}</div>
         <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-1">{label}</p>

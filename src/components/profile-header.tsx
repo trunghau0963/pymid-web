@@ -45,7 +45,7 @@ export function ProfileHeader({
           {/* Avatar Section */}
           <div className="relative group">
             {/* Glow Effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 to-primary/50 rounded-2xl blur opacity-40 group-hover:opacity-60 transition duration-300" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 to-primary/50 rounded-md blur opacity-40 group-hover:opacity-60 transition duration-300" />
             
             {image ? (
               <Image
@@ -53,10 +53,10 @@ export function ProfileHeader({
                 alt={name}
                 width={160}
                 height={160}
-                className="relative w-28 h-28 md:w-36 md:h-36 rounded-xl object-cover border-4 border-white shadow-xl"
+                className="relative w-28 h-28 md:w-36 md:h-36 rounded-sm object-cover border-4 border-white shadow-xl"
               />
             ) : (
-              <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white border-4 border-white shadow-xl">
+              <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-sm bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white border-4 border-white shadow-xl">
                 <span className="text-4xl md:text-5xl font-bold">
                   {name.charAt(0).toUpperCase()}
                 </span>
@@ -101,7 +101,7 @@ export function ProfileHeader({
 
             {/* Description */}
             {description && (
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5 max-w-2xl bg-card/60 backdrop-blur-sm rounded-xl p-3 border border-border/40">
+              <p className="text-muted-foreground text-sm leading-relaxed mb-5 max-w-2xl bg-card/60 backdrop-blur-sm rounded-sm p-3 border border-border/40">
                 {description}
               </p>
             )}
@@ -112,9 +112,9 @@ export function ProfileHeader({
                 {contactInfo.map((info, index) => (
                   <div 
                     key={index} 
-                    className="flex items-center gap-3 bg-card rounded-2xl px-4 py-3 shadow-sm border border-border/40 hover:shadow-md hover:border-primary/20 transition-all duration-200 group"
+                    className="flex items-center gap-3 bg-card rounded-md px-4 py-3 shadow-sm border border-border/40 hover:shadow-md hover:border-primary/20 transition-all duration-200 group"
                   >
-                    <div className="flex-shrink-0 p-2 bg-primary/[0.08] rounded-xl text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200">
+                    <div className="flex-shrink-0 p-2 bg-primary/[0.08] rounded-sm text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200">
                       {info.icon}
                     </div>
                     <div className="min-w-0">

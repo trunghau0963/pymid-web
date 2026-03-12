@@ -135,7 +135,7 @@ export function NhomToYenFilter({ items }: Props) {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border overflow-hidden">
+      <div className="rounded-sm border overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/50">

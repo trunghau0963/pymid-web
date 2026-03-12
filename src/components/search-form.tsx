@@ -40,7 +40,7 @@ export function SearchForm({ className = '', variant = 'default' }: SearchFormPr
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="px-3 py-2 rounded-xl border border-border/60 bg-card text-foreground text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all duration-200"
+          className="px-3 py-2 rounded-sm border border-border/60 bg-card text-foreground text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all duration-200"
         >
           {CATEGORIES.map((cat) => (
             <option key={cat.value} value={cat.value}>
@@ -53,12 +53,12 @@ export function SearchForm({ className = '', variant = 'default' }: SearchFormPr
           value={code}
           onChange={(e) => setCode(e.target.value)}
           placeholder={selectedCategory.placeholder}
-          className="flex-1 px-4 py-2 rounded-xl border border-border/60 bg-card text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all duration-200 text-sm shadow-sm"
+          className="flex-1 px-4 py-2 rounded-sm border border-border/60 bg-card text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all duration-200 text-sm shadow-sm"
         />
         <button
           type="submit"
           disabled={!code.trim() || isLoading}
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-primary/25"
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-sm font-medium hover:bg-primary/90 transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-primary/25"
         >
           <Search className="h-4 w-4" />
         </button>
@@ -95,7 +95,7 @@ export function SearchForm({ className = '', variant = 'default' }: SearchFormPr
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder={selectedCategory.placeholder}
-              className="w-full px-5 py-3.5 rounded-xl border border-border/60 bg-card text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all duration-200 text-base shadow-sm"
+              className="w-full px-5 py-3.5 rounded-sm border border-border/60 bg-card text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all duration-200 text-base shadow-sm"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
@@ -107,7 +107,7 @@ export function SearchForm({ className = '', variant = 'default' }: SearchFormPr
           <button
             type="submit"
             disabled={!code.trim() || isLoading}
-            className="px-6 py-3.5 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-200 flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/30"
+            className="px-6 py-3.5 bg-primary text-primary-foreground rounded-sm font-semibold hover:bg-primary/90 transition-all duration-200 flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-primary/25 hover:shadow-lg hover:shadow-primary/30"
           >
             {isLoading ? (
               <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

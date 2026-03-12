@@ -100,7 +100,7 @@ export default async function NhaYenPage({ params }: Props) {
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         {/* YouTube / Image */}
-        <div className="rounded-2xl overflow-hidden bg-muted">
+        <div className="rounded-md overflow-hidden bg-muted">
           {youtubeEmbed ? (
             <div className="aspect-video">
               <iframe
@@ -130,7 +130,7 @@ export default async function NhaYenPage({ params }: Props) {
         </div>
 
         {/* Info Table */}
-        <Card className="rounded-2xl">
+        <Card className="rounded-md">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2 mb-1">
               <Home className="h-5 w-5 text-primary" />
@@ -213,63 +213,71 @@ export default async function NhaYenPage({ params }: Props) {
 
       {/* Tabs Navigation */}
       <Tabs defaultValue="info" className="space-y-6">
-        <TabsList className="w-full justify-start flex-wrap h-auto gap-1.5 bg-muted/40 p-1.5 rounded-2xl border border-border/40">
-          <TabsTrigger
-            value="info"
-            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
-          >
-            <Home className="h-4 w-4" />
-            <span className="hidden sm:inline">Thông tin nhà yến</span>
-            <span className="sm:hidden">Nhà yến</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="sold"
-            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
-          >
-            <Package className="h-4 w-4" />
-            <span className="hidden sm:inline">Thùng tổ yến đã bán</span>
-            <span className="sm:hidden">Đã bán</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="diary"
-            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
-          >
-            <BookOpen className="h-4 w-4" />
-            <span className="hidden sm:inline">Nhật ký khép kín</span>
-            <span className="sm:hidden">Nhật ký</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="environment"
-            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
-          >
-            <Gauge className="h-4 w-4" />
-            <span className="hidden sm:inline">Thiết bị đo lường</span>
-            <span className="sm:hidden">Thiết bị</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="owner"
-            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
-          >
-            <User className="h-4 w-4" />
-            <span className="hidden sm:inline">Đại diện nhà yến</span>
-            <span className="sm:hidden">Đại diện</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="harvest"
-            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-xl gap-1.5 text-xs sm:text-sm transition-all duration-200"
-          >
-            <Scissors className="h-4 w-4" />
-            <span className="hidden sm:inline">Quy trình hái tổ</span>
-            <span className="sm:hidden">Hái tổ</span>
-          </TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto -mx-4 px-4 scrollbar-hide">
+          <TabsList className="w-full flex flex-wrap h-auto min-h-14 gap-2 p-2 bg-gradient-to-r from-emerald-50/90 via-slate-50/90 to-emerald-50/90 rounded-md shadow-md shadow-emerald-100/50 border border-emerald-100/50">
+            <TabsTrigger
+              value="info"
+              className="px-3 py-2 rounded-sm bg-transparent text-slate-600 font-medium gap-1.5 text-xs whitespace-nowrap transition-all duration-300 ease-out
+                hover:text-primary hover:bg-white/80
+                data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:shadow-primary/15"
+            >
+              <Home className="h-3.5 w-3.5" />
+              Nhà yến
+            </TabsTrigger>
+            <TabsTrigger
+              value="sold"
+              className="px-3 py-2 rounded-sm bg-transparent text-slate-600 font-medium gap-1.5 text-xs whitespace-nowrap transition-all duration-300 ease-out
+                hover:text-primary hover:bg-white/80
+                data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:shadow-primary/15"
+            >
+              <Package className="h-3.5 w-3.5" />
+              Đã bán
+            </TabsTrigger>
+            <TabsTrigger
+              value="diary"
+              className="px-3 py-2 rounded-sm bg-transparent text-slate-600 font-medium gap-1.5 text-xs whitespace-nowrap transition-all duration-300 ease-out
+                hover:text-primary hover:bg-white/80
+                data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:shadow-primary/15"
+            >
+              <BookOpen className="h-3.5 w-3.5" />
+              Nhật ký
+            </TabsTrigger>
+            <TabsTrigger
+              value="environment"
+              className="px-3 py-2 rounded-sm bg-transparent text-slate-600 font-medium gap-1.5 text-xs whitespace-nowrap transition-all duration-300 ease-out
+                hover:text-primary hover:bg-white/80
+                data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:shadow-primary/15"
+            >
+              <Gauge className="h-3.5 w-3.5" />
+              Đo lường
+            </TabsTrigger>
+            <TabsTrigger
+              value="owner"
+              className="px-3 py-2 rounded-sm bg-transparent text-slate-600 font-medium gap-1.5 text-xs whitespace-nowrap transition-all duration-300 ease-out
+                hover:text-primary hover:bg-white/80
+                data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:shadow-primary/15"
+            >
+              <User className="h-3.5 w-3.5" />
+              Đại diện
+            </TabsTrigger>
+            <TabsTrigger
+              value="harvest"
+              className="px-3 py-2 rounded-sm bg-transparent text-slate-600 font-medium gap-1.5 text-xs whitespace-nowrap transition-all duration-300 ease-out
+                hover:text-primary hover:bg-white/80
+                data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:shadow-primary/15"
+            >
+              <Scissors className="h-3.5 w-3.5" />
+              Hái tổ
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Tab: Thông tin nhà yến */}
         <TabsContent value="info">
           <div className="space-y-6">
             {/* Images Gallery */}
             {data.image && data.image.length > 0 && (
-              <Card className="rounded-2xl">
+              <Card className="rounded-md">
                 <CardHeader>
                   <CardTitle className="text-lg">Hình Ảnh Nhà Yến</CardTitle>
                 </CardHeader>
@@ -280,7 +288,7 @@ export default async function NhaYenPage({ params }: Props) {
             )}
 
             {/* Detailed Info */}
-            <Card className="rounded-2xl">
+            <Card className="rounded-md">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <ShieldCheck className="h-5 w-5 text-primary" />
@@ -315,7 +323,7 @@ export default async function NhaYenPage({ params }: Props) {
 
             {/* Location */}
             {data.location && (
-              <Card className="rounded-2xl">
+              <Card className="rounded-md">
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-primary" />
@@ -328,7 +336,7 @@ export default async function NhaYenPage({ params }: Props) {
                       {data.location.address}
                     </p>
                   )}
-                  <div className="rounded-xl overflow-hidden h-64">
+                  <div className="rounded-sm overflow-hidden h-64">
                     <iframe
                       src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${data.location.lat},${data.location.long}&zoom=15`}
                       className="w-full h-full border-0"
@@ -345,7 +353,7 @@ export default async function NhaYenPage({ params }: Props) {
 
         {/* Tab: Thùng tổ yến đã bán */}
         <TabsContent value="sold">
-          <Card className="rounded-2xl">
+          <Card className="rounded-md">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Package className="h-5 w-5 text-primary" />
@@ -360,7 +368,7 @@ export default async function NhaYenPage({ params }: Props) {
 
         {/* Tab: Nhật ký khép kín */}
         <TabsContent value="diary">
-          <Card className="rounded-2xl">
+          <Card className="rounded-md">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <BookOpen className="h-5 w-5 text-primary" />
@@ -375,7 +383,7 @@ export default async function NhaYenPage({ params }: Props) {
 
         {/* Tab: Thông số môi trường / Thiết bị đo lường */}
         <TabsContent value="environment">
-          <Card className="rounded-2xl">
+          <Card className="rounded-md">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Gauge className="h-5 w-5 text-primary" />
@@ -397,7 +405,7 @@ export default async function NhaYenPage({ params }: Props) {
         {/* Tab: Đại diện nhà yến */}
         <TabsContent value="owner">
           {data.owner ? (
-            <Card className="rounded-2xl">
+            <Card className="rounded-md">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <User className="h-5 w-5 text-primary" />
@@ -416,7 +424,7 @@ export default async function NhaYenPage({ params }: Props) {
                         alt={
                           data.owner.bio?.fullname || data.owner.username
                         }
-                        className="w-40 h-40 rounded-xl object-cover"
+                        className="w-40 h-40 rounded-sm object-cover"
                       />
                     </div>
                   )}
@@ -455,7 +463,7 @@ export default async function NhaYenPage({ params }: Props) {
             </Card>
           ) : (
             <Card>
-              <CardContent className="py-8 text-center text-muted-foreground rounded-2xl">
+              <CardContent className="py-8 text-center text-muted-foreground rounded-md">
                 Chưa có thông tin đại diện nhà yến
               </CardContent>
             </Card>
@@ -464,7 +472,7 @@ export default async function NhaYenPage({ params }: Props) {
 
         {/* Tab: Quy trình hái tổ */}
         <TabsContent value="harvest">
-          <Card className="rounded-2xl">
+          <Card className="rounded-md">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Scissors className="h-5 w-5 text-primary" />
@@ -514,8 +522,8 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="flex items-center gap-3 p-4 rounded-xl bg-muted/40 border border-border/40">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+    <div className="flex items-center gap-3 p-4 rounded-sm bg-muted/40 border border-border/40">
+      <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-primary/10 text-primary">
         {icon}
       </div>
       <div>

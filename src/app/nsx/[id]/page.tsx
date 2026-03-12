@@ -14,12 +14,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import { ProfileHeader } from "@/components/profile-header";
 import {
   Factory,
   MapPin,
@@ -28,16 +25,10 @@ import {
   Globe,
   User,
   ExternalLink,
-  Package,
-  Home,
-  Users,
   ShieldCheck,
-  Play,
-  FileText,
-  Camera,
 } from "lucide-react";
-import { RichText } from "@/components/rich-text";
 import { ImageGalleryLightbox } from "@/components/image-gallery-lightbox";
+import { NsxTabs } from "./nsx-tabs";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -123,17 +114,6 @@ export default async function NhaSanXuatPage({ params }: Props) {
   const nhaYens = data.nha_yens || [];
   const kyThuats = data.ky_thuats || [];
 
-  // Determine which tabs to show
-  const tabs = [
-    { id: "info", label: "Thông tin", show: true },
-    { id: "products", label: `Sản phẩm (${activeProducts.length})`, show: activeProducts.length > 0 },
-    { id: "nha-yen", label: `Nhà yến (${nhaYens.length})`, show: nhaYens.length > 0 },
-    { id: "team", label: `Đội ngũ (${kyThuats.length})`, show: kyThuats.length > 0 },
-    { id: "flow", label: "Quy trình", show: !!data.flow_description },
-    { id: "license", label: "Giấy phép", show: !!data.license_description },
-    { id: "camera", label: "Camera", show: !!data.cam_description },
-  ].filter((t) => t.show);
-
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       {/* Breadcrumb */}
@@ -143,7 +123,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
 
       {/* Banner */}
       {data.banner && (
-        <div className="rounded-2xl overflow-hidden mb-6">
+        <div className="rounded-md overflow-hidden mb-6">
           <img
             src={getImageUrl(data.banner.url)}
             alt={data.name}
@@ -155,7 +135,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         {/* YouTube / Image */}
-        <div className="rounded-2xl overflow-hidden bg-muted">
+        <div className="rounded-md overflow-hidden bg-muted">
           {youtubeEmbed ? (
             <div className="aspect-video">
               <iframe
@@ -180,7 +160,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
         </div>
 
         {/* Info Card */}
-        <Card className="rounded-2xl">
+        <Card className="rounded-md">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2 mb-1">
               <Factory className="h-5 w-5 text-primary" />
@@ -229,7 +209,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
 
       {/* Owner Info */}
       {data.owner && (
-        <Card className="mb-8 rounded-2xl">
+        <Card className="mb-8 rounded-md">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
               <User className="h-5 w-5" />
@@ -239,7 +219,7 @@ export default async function NhaSanXuatPage({ params }: Props) {
           <CardContent>
             <Link
               href={`/u/${data.owner.id}`}
-              className="flex items-center gap-4 hover:bg-muted/60 p-3 rounded-xl transition-colors"
+              className="flex items-center gap-4 hover:bg-muted/60 p-3 rounded-sm transition-colors"
             >
               <Avatar className="h-12 w-12">
                 {data.owner.avatar ? (
@@ -282,251 +262,12 @@ export default async function NhaSanXuatPage({ params }: Props) {
       )}
 
       {/* Tabs */}
-      <Tabs defaultValue="info" className="space-y-6">
-        <TabsList className="w-full flex flex-wrap h-auto gap-1 bg-muted/50 p-1 rounded-xs">
-          {tabs.map((tab) => (
-            <TabsTrigger
-              key={tab.id}
-              value={tab.id}
-              className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-200"
-            >
-              {tab.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-
-        {/* Info Tab */}
-        <TabsContent value="info">
-          <Card className="rounded-xl">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Giới thiệu
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {data.description ? (
-                <RichText content={data.description} />
-              ) : (
-                <p className="text-muted-foreground">Chưa có thông tin</p>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Products Tab */}
-        {activeProducts.length > 0 && (
-          <TabsContent value="products">
-            <Card className="rounded-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Package className="h-5 w-5" />
-                  Sản phẩm ({activeProducts.length})
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {activeProducts.map((product) => (
-                    <Card key={product.id} className="rounded-xl overflow-hidden">
-                      {product.image?.[0] ? (
-                        <img
-                          src={getImageUrl(product.image[0].url)}
-                          alt={product.name}
-                          className="w-full h-40 object-cover"
-                        />
-                      ) : product.banner ? (
-                        <img
-                          src={getImageUrl(product.banner.url)}
-                          alt={product.name}
-                          className="w-full h-40 object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-40 bg-muted flex items-center justify-center">
-                          <Package className="h-10 w-10 text-muted-foreground" />
-                        </div>
-                      )}
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold line-clamp-2">
-                          {product.name}
-                        </h3>
-                        {product.short_description && (
-                          <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                            {product.short_description}
-                          </p>
-                        )}
-                        {product.timelife && (
-                          <Badge variant="secondary" className="mt-2 rounded-xl">
-                            HSD: {product.timelife} ngày
-                          </Badge>
-                        )}
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        )}
-
-        {/* Nhà yến Tab */}
-        {nhaYens.length > 0 && (
-          <TabsContent value="nha-yen">
-            <Card className="rounded-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Home className="h-5 w-5" />
-                  Nhà yến liên kết ({nhaYens.length})
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {nhaYens.map((nhaYen) => (
-                    <Link
-                      key={nhaYen.id}
-                      href={`/ny/${nhaYen.id}`}
-                      className="block"
-                    >
-                      <Card className="rounded-xl overflow-hidden hover:shadow-md transition-shadow">
-                        {nhaYen.image?.[0] ? (
-                          <img
-                            src={getImageUrl(nhaYen.image[0].url)}
-                            alt={nhaYen.name}
-                            className="w-full h-32 object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-32 bg-muted flex items-center justify-center">
-                            <Home className="h-8 w-8 text-muted-foreground" />
-                          </div>
-                        )}
-                        <CardContent className="p-4">
-                          <h3 className="font-semibold">{nhaYen.name}</h3>
-                          {nhaYen.short_description && (
-                            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                              {nhaYen.short_description}
-                            </p>
-                          )}
-                          <div className="flex gap-2 mt-2 flex-wrap">
-                            {nhaYen.so_o_da && (
-                              <Badge variant="outline" className="rounded-xl">
-                                {nhaYen.so_o_da} tổ
-                              </Badge>
-                            )}
-                            {nhaYen.floor && (
-                              <Badge variant="outline" className="rounded-xl">
-                                {nhaYen.floor} tầng
-                              </Badge>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        )}
-
-        {/* Team Tab */}
-        {kyThuats.length > 0 && (
-          <TabsContent value="team">
-            <Card className="rounded-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  Đội ngũ kỹ thuật ({kyThuats.length})
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {kyThuats.map((user) => (
-                    <Link key={user.id} href={`/u/${user.id}`}>
-                      <Card className="rounded-xl hover:shadow-md transition-shadow">
-                        <CardContent className="p-4 flex items-center gap-4">
-                          <Avatar className="h-12 w-12">
-                            {user.avatar ? (
-                              <AvatarImage
-                                src={getImageUrl(user.avatar.url)}
-                                alt={user.bio?.fullname || user.username}
-                              />
-                            ) : null}
-                            <AvatarFallback>
-                              {(user.bio?.fullname || user.username)
-                                .charAt(0)
-                                .toUpperCase()}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="min-w-0">
-                            <p className="font-semibold truncate">
-                              {user.bio?.fullname || user.username}
-                            </p>
-                            {user.who_am_i && (
-                              <p className="text-sm text-muted-foreground truncate">
-                                {user.who_am_i}
-                              </p>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        )}
-
-        {/* Flow Tab */}
-        {data.flow_description && (
-          <TabsContent value="flow">
-            <Card className="rounded-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Play className="h-5 w-5" />
-                  Quy trình sản xuất
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <RichText content={data.flow_description} />
-              </CardContent>
-            </Card>
-          </TabsContent>
-        )}
-
-        {/* License Tab */}
-        {data.license_description && (
-          <TabsContent value="license">
-            <Card className="rounded-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <ShieldCheck className="h-5 w-5" />
-                  Giấy phép & Chứng nhận
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <RichText content={data.license_description} />
-              </CardContent>
-            </Card>
-          </TabsContent>
-        )}
-
-        {/* Camera Tab */}
-        {data.cam_description && (
-          <TabsContent value="camera">
-            <Card className="rounded-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Camera className="h-5 w-5" />
-                  Camera giám sát
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <RichText content={data.cam_description} />
-              </CardContent>
-            </Card>
-          </TabsContent>
-        )}
-      </Tabs>
+      <NsxTabs 
+        data={data} 
+        activeProducts={activeProducts} 
+        nhaYens={nhaYens} 
+        kyThuats={kyThuats} 
+      />
     </div>
   );
 }
