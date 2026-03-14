@@ -29,7 +29,6 @@ import {
   Globe,
   User,
   ExternalLink,
-  Store,
   Users,
   ShieldCheck,
   FileText,
@@ -140,9 +139,9 @@ export default async function PartyPage({ params }: Props) {
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         {/* YouTube / Image */}
-        <div className="rounded-md overflow-hidden bg-muted/50">
+        <div className="rounded-md overflow-hidden border border-border/60 bg-card">
           {youtubeEmbed ? (
-            <div className="aspect-video">
+            <div className="aspect-video bg-muted/50">
               <iframe
                 src={youtubeEmbed}
                 className="w-full h-full"
@@ -155,36 +154,35 @@ export default async function PartyPage({ params }: Props) {
             <img
               src={getImageUrl(data.image[0].url)}
               alt={data.name}
-              className="w-full aspect-video object-cover"
+              className="w-full aspect-video object-cover bg-muted/50"
             />
           ) : (
-            <div className="aspect-video flex items-center justify-center text-muted-foreground">
+            <div className="aspect-video flex items-center justify-center text-muted-foreground bg-muted/50">
               <Building2 className="h-16 w-16" />
             </div>
           )}
+
+          <div className="border-t border-border/60 px-5 py-5">
+            <div className="flex items-center gap-2 mb-2">
+              <Building2 className="h-5 w-5 text-primary" />
+              <h1 className="text-2xl font-semibold text-primary leading-tight">
+                {data.name}
+              </h1>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {data.short_description || "Thông tin nhà phân phối chính hãng trong hệ sinh thái PYMID."}
+            </p>
+            {data.code && (
+              <Badge variant="outline" className="w-fit mt-3 rounded-sm">
+                Mã: {data.code}
+              </Badge>
+            )}
+          </div>
         </div>
 
         {/* Info Card */}
         <Card className="rounded-md border-border/60">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2 mb-1">
-              <Building2 className="h-5 w-5 text-primary" />
-              <CardTitle className="text-xl text-primary">
-                {data.name}
-              </CardTitle>
-            </div>
-            {data.short_description && (
-              <p className="text-sm text-muted-foreground">
-                {data.short_description}
-              </p>
-            )}
-            {data.code && (
-              <Badge variant="outline" className="w-fit mt-2 rounded-sm">
-                Mã: {data.code}
-              </Badge>
-            )}
-          </CardHeader>
-          <CardContent className="space-y-1">
+          <CardContent className="space-y-1 pt-5 pb-5">
             <InfoRow
               label="Mã giấy phép"
               value={data.license}

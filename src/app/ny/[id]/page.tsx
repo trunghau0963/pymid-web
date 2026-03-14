@@ -100,9 +100,9 @@ export default async function NhaYenPage({ params }: Props) {
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         {/* YouTube / Image */}
-        <div className="rounded-md overflow-hidden bg-muted">
+        <div className="rounded-md overflow-hidden border border-border/60 bg-card">
           {youtubeEmbed ? (
-            <div className="aspect-video">
+            <div className="aspect-video bg-muted/50">
               <iframe
                 src={youtubeEmbed}
                 className="w-full h-full"
@@ -115,31 +115,31 @@ export default async function NhaYenPage({ params }: Props) {
             <img
               src={getImageUrl(data.image[0].url)}
               alt={data.name}
-              className="w-full aspect-video object-cover"
+              className="w-full aspect-video object-cover bg-muted/50"
             />
           ) : (
-            <div className="aspect-video flex items-center justify-center text-muted-foreground">
+            <div className="aspect-video flex items-center justify-center text-muted-foreground bg-muted/50">
               <Home className="h-16 w-16" />
             </div>
           )}
-          {data.short_description && (
-            <div className="p-4 text-sm text-muted-foreground text-center">
-              {data.short_description}
+
+          <div className="border-t border-border/60 px-5 py-5">
+            <div className="flex items-center gap-2 mb-2">
+              <Home className="h-5 w-5 text-primary" />
+              <h1 className="text-2xl font-semibold text-primary leading-tight">
+                Truy Xuất Thông Tin Nhà Yến
+              </h1>
             </div>
-          )}
+            <p className="text-base font-semibold text-foreground">{data.name}</p>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              {data.short_description || "Thông tin tổng quan và dữ liệu vận hành của nhà yến trong hệ sinh thái PYMID."}
+            </p>
+          </div>
         </div>
 
         {/* Info Table */}
         <Card className="rounded-md">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2 mb-1">
-              <Home className="h-5 w-5 text-primary" />
-              <CardTitle className="text-xl text-primary">
-                Truy Xuất Thông Tin Nhà Yến
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
+          <CardContent className="pt-5 pb-5">
             <div className="space-y-3">
               <InfoRow
                 label="Tên nhà yến"

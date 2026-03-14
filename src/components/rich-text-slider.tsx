@@ -3,8 +3,7 @@
 import { ContentSlider } from "@/components/content-slider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Play } from "lucide-react";
-
-const API_BASE = "https://api.pymid.com";
+import { normalizeRichTextSource, renderRichTextHtml } from "@/lib/rich-text";
 
 interface ContentSection {
   title: string;
@@ -12,79 +11,87 @@ interface ContentSection {
   description: string;
 }
 
-function parseFlowContent(html: string): ContentSection[] {
+function toPlainTitle(value: string): string {
+  return value
+    .replace(/<[^>]*>/g, "")
+    .replace(/^[*_#\s]+/, "")
+    .replace(/[*_\s]+$/, "")
+    .trim();
+}
+
+function extractTitle(segment: string, index: number): string {
+  const headings = [...segment.matchAll(/^#{1,6}\s+(.+)$/gm)];
+  if (headings.length > 0) {
+    return toPlainTitle(headings[headings.length - 1][1]) || `Quy trình ${index}`;
+  }
+
+  const strongLine = segment.match(/^\s*[^\w\s]?\s*\*\*(.+?)\*\*\s*:?.*$/m);
+  if (strongLine?.[1]) {
+    return toPlainTitle(strongLine[1]) || `Quy trình ${index}`;
+  }
+
+  const firstLine = segment
+    .split("\n")
+    .map((line) => line.trim())
+    .find((line) => line.length > 0);
+
+  if (firstLine) {
+    return toPlainTitle(firstLine).slice(0, 80) || `Quy trình ${index}`;
+  }
+
+  return `Quy trình ${index}`;
+}
+
+function stripPrimaryTitle(segment: string): string {
+  return segment
+    .replace(/^\s*#{1,6}\s+.+$/m, "")
+    .replace(/^\s*[^\w\s]?\s*\*\*.+?\*\*\s*:?.*$/m, "")
+    .trim();
+}
+
+function parseFlowContent(raw: string): ContentSection[] {
   const sections: ContentSection[] = [];
-  
-  // Normalize line breaks
-  let content = html.replace(/<BR>/gi, "<br/>").replace(/\n/g, "<br/>");
-  
-  // Extract YouTube iframes and their preceding titles
-  // Pattern: Look for titles (often marked with # or ** or ***) followed by video iframes
-  
-  // Split by iframe tags to separate sections
+  const content = normalizeRichTextSource(raw);
+
+  if (!content) {
+    return sections;
+  }
+
   const iframeRegex = /<iframe[^>]*src=["']([^"']+)["'][^>]*><\/iframe>/gi;
-  const parts = content.split(iframeRegex);
-  
-  // Get all iframe URLs
-  const iframeMatches = [...content.matchAll(/<iframe[^>]*src=["']([^"']+)["'][^>]*><\/iframe>/gi)];
-  
-  for (let i = 0; i < iframeMatches.length; i++) {
-    const beforeIframe = parts[i * 2] || "";
-    const iframeUrl = iframeMatches[i][1];
-    
-    // Extract title from before the iframe - look for markdown headers or bold text
-    let title = "";
-    
-    // Try to find ## header or *** bold+italic title
-    const headerMatch = beforeIframe.match(/(?:##+\s*|(?:\*{3}|_{3}))([^*_#<\n]+)(?:\*{3}|_{3})?[^<]*$/);
-    if (headerMatch) {
-      title = headerMatch[1].trim();
-    } else {
-      // Try to find any text near the end that looks like a title
-      const textMatch = beforeIframe.match(/([^<>]{10,100}?)\s*(?:<br\/?>\s*)*$/);
-      if (textMatch) {
-        title = textMatch[1].replace(/[*#_]+/g, '').trim();
-      }
-    }
-    
-    // Clean up title
-    title = title.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
-    
-    // Get description (remaining part before iframe, cleaned)
-    let description = beforeIframe
-      .replace(/#+\s*[^<\n]+/g, '') // Remove headers
-      .replace(/\*{3}[^*]+\*{3}/g, '') // Remove bold+italic
-      .replace(/<br\/?>\s*<br\/?>/gi, '<br/>') // Reduce multiple breaks
-      .trim();
-    
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let step = 1;
+
+  while ((match = iframeRegex.exec(content)) !== null) {
+    const beforeIframe = content.slice(lastIndex, match.index).trim();
+    const videoUrl = match[1];
+    const title = extractTitle(beforeIframe, step);
+    const description = stripPrimaryTitle(beforeIframe);
+
     sections.push({
-      title: title || `Quy trình ${i + 1}`,
-      videoUrl: iframeUrl,
-      description: ""
+      title,
+      videoUrl,
+      description,
+    });
+
+    lastIndex = iframeRegex.lastIndex;
+    step += 1;
+  }
+
+  const trailing = content.slice(lastIndex).trim();
+  if (trailing) {
+    const headingChunks = trailing.split(/(?=^#{2,6}\s+.+$)/gm).filter((item) => item.trim());
+    const chunks = headingChunks.length > 1 ? headingChunks : [trailing];
+
+    chunks.forEach((chunk, index) => {
+      sections.push({
+        title: extractTitle(chunk, step + index),
+        videoUrl: null,
+        description: chunk.trim(),
+      });
     });
   }
-  
-  // If no iframes found, try to split by headers
-  if (sections.length === 0) {
-    // Split by ## headers or *** markers
-    const headerSections = content.split(/(?=(?:##+|(?:\*{3}|_{3}))[^<\n]+)/);
-    
-    for (const section of headerSections) {
-      if (!section.trim()) continue;
-      
-      const titleMatch = section.match(/^(?:##+\s*|(?:\*{3}|_{3}))([^*_#<\n]+)/);
-      const title = titleMatch ? titleMatch[1].replace(/[*_]+$/, '').trim() : "";
-      
-      if (title) {
-        sections.push({
-          title,
-          videoUrl: null,
-          description: section.replace(/^(?:##+\s*|(?:\*{3}|_{3}))[^<\n]*/, '').trim()
-        });
-      }
-    }
-  }
-  
+
   return sections;
 }
 
@@ -101,6 +108,10 @@ function getYoutubeEmbedUrl(url: string): string {
 }
 
 function FlowSlide({ section, index, total }: { section: ContentSection; index: number; total: number }) {
+  const descriptionHtml = section.description
+    ? renderRichTextHtml(section.description)
+    : "";
+
   return (
     <Card className="rounded-sm overflow-hidden">
       <CardHeader className="bg-gradient-to-r from-primary/5 to-primary/10 pb-4">
@@ -117,6 +128,13 @@ function FlowSlide({ section, index, total }: { section: ContentSection; index: 
         </div>
       </CardHeader>
       <CardContent className="p-4">
+        {descriptionHtml ? (
+          <div
+            className="rich-text mb-4 max-w-none text-[15px] sm:text-base"
+            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+          />
+        ) : null}
+
         {section.videoUrl ? (
           <div className="aspect-video rounded-lg overflow-hidden bg-slate-100">
             <iframe
@@ -127,16 +145,11 @@ function FlowSlide({ section, index, total }: { section: ContentSection; index: 
               title={section.title}
             />
           </div>
-        ) : section.description ? (
-          <div 
-            className="prose prose-sm max-w-none"
-            dangerouslySetInnerHTML={{ __html: section.description }}
-          />
-        ) : (
+        ) : !descriptionHtml ? (
           <div className="aspect-video rounded-lg bg-slate-100 flex items-center justify-center text-muted-foreground">
             <Play className="h-12 w-12" />
           </div>
-        )}
+        ) : null}
       </CardContent>
     </Card>
   );
